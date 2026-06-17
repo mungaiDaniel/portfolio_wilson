@@ -1,0 +1,2053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>DevPortfolio — Build Smarter. Scale Faster.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  /* ── Dashboard navy palette ── */
+  --bg:       #0b1829;   /* page background */
+  --bg2:      #0f2035;   /* slightly lighter panels */
+  --card:     #132340;   /* card surface */
+  --card2:    #1a2d4e;   /* hovered / alternate card */
+  --border:   #1e3557;   /* subtle borders */
+  --border2:  #254268;   /* stronger borders */
+  --acc:      #2d8ef5;   /* primary blue accent */
+  --acc2:     #1a6fd4;   /* darker accent */
+  --acc-glow: rgba(45,142,245,.28);
+  --acc-soft: rgba(45,142,245,.12);
+  --txt:      #e8f1fb;   /* primary text */
+  --txt2:     #7ba3c8;   /* secondary text */
+  --txt3:     #4a6d8c;   /* muted text */
+  --green:    #22d3a0;
+  --amber:    #f5a623;
+  --red:      #f55353;
+  --purple:   #9b6dff;
+  --cyan:     #22c7d4;
+  --fd:'Space Grotesk',sans-serif;
+  --fb:'Inter',sans-serif;
+  --r8:8px;--r12:12px;--r16:16px;--r24:24px;
+  --sh-card: 0 4px 24px rgba(0,0,0,.35);
+  --sh-acc:  0 4px 24px var(--acc-glow);
+  --sh-lg:   0 8px 48px rgba(0,0,0,.5);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--bg);color:var(--txt);line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4{font-family:var(--fd);font-weight:700;line-height:1.15}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;font-family:var(--fb)}
+input,textarea{font-family:var(--fb)}
+::selection{background:var(--acc-soft);color:#fff}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg2)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--acc)}
+
+/* ── Layout ── */
+.wrap{max-width:1160px;margin:0 auto;padding:0 28px}
+.page{display:none}.page.active{display:block}
+
+/* ── Shared UI ── */
+.eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--acc);
+  border:1px solid var(--border2);padding:4px 14px;border-radius:20px;
+  margin-bottom:14px;background:var(--acc-soft)}
+.section-h2{font-size:clamp(28px,4vw,44px);color:var(--txt);margin-bottom:14px;font-weight:800}
+.section-sub{font-size:16px;color:var(--txt2);line-height:1.75;max-width:540px}
+.sh{margin-bottom:48px}
+.sh.center{text-align:center}.sh.center .section-sub{margin:0 auto}
+.section{padding:88px 0}
+.section.alt{background:var(--bg2)}
+
+.btn-acc{display:inline-flex;align-items:center;gap:8px;padding:12px 26px;border-radius:40px;
+  background:var(--acc);color:#fff;font-weight:700;font-size:14px;border:none;
+  box-shadow:var(--sh-acc);transition:all .25s;cursor:pointer}
+.btn-acc:hover{background:var(--acc2);transform:translateY(-2px);box-shadow:0 8px 28px var(--acc-glow)}
+.btn-dark{display:inline-flex;align-items:center;gap:8px;padding:12px 26px;border-radius:40px;
+  background:var(--card2);color:var(--txt);font-weight:700;font-size:14px;
+  border:1.5px solid var(--border2);transition:all .25s;cursor:pointer}
+.btn-dark:hover{background:var(--acc);border-color:var(--acc);color:#fff;box-shadow:var(--sh-acc)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:11px 24px;border-radius:40px;
+  background:transparent;color:var(--txt2);font-weight:600;font-size:14px;
+  border:1.5px solid var(--border2);transition:all .2s;cursor:pointer}
+.btn-ghost:hover{border-color:var(--acc);color:var(--acc)}
+
+/* ── CARD ── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r16);
+  padding:28px;box-shadow:var(--sh-card)}
+.card:hover{border-color:var(--border2)}
+
+/* ── NAV ── */
+#mainNav{position:fixed;top:0;left:0;right:0;z-index:2000;
+  background:rgba(11,24,41,.88);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);transition:all .3s}
+#mainNav.scrolled{background:rgba(11,24,41,.97);border-bottom-color:var(--border2)}
+.nav-wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--fd);font-weight:800;
+  font-size:20px;color:var(--txt);cursor:pointer}
+.logo-box{width:34px;height:34px;background:var(--acc);border-radius:9px;
+  display:flex;align-items:center;justify-content:center;box-shadow:var(--sh-acc)}
+.nav-phone{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--txt2);margin-right:8px}
+.nav-links{display:flex;align-items:center;gap:2px;list-style:none}
+.nav-links>li{position:relative}
+.nav-links>li>a,.nav-links>li>button{padding:7px 13px;border-radius:8px;font-size:14px;
+  font-weight:500;color:var(--txt2);background:none;border:none;cursor:pointer;
+  display:flex;align-items:center;gap:4px;transition:all .2s}
+.nav-links>li>a:hover,.nav-links>li>button:hover,
+.nav-links>li>a.anav,.nav-links>li>button.anav{color:var(--acc);background:var(--acc-soft)}
+.nav-cta{padding:10px 22px;border-radius:10px;font-size:14px;font-weight:700;
+  background:var(--acc);color:#fff;border:none;cursor:pointer;
+  box-shadow:var(--sh-acc);transition:all .2s;display:flex;align-items:center;gap:6px}
+.nav-cta:hover{background:var(--acc2);transform:translateY(-1px)}
+.hamburger{display:none;background:none;border:none;color:var(--txt);font-size:22px;cursor:pointer;padding:4px}
+.mob-menu{display:none;background:var(--bg2);border-top:1px solid var(--border);
+  padding:12px 24px 24px;position:fixed;top:68px;left:0;right:0;z-index:1999;
+  box-shadow:0 16px 40px rgba(0,0,0,.4)}
+.mob-menu.open{display:block}
+.mob-link{display:block;padding:12px 0;font-size:15px;font-weight:500;
+  color:var(--txt2);border-bottom:1px solid var(--border)}
+.mob-link:hover{color:var(--acc)}
+
+/* Mega drop */
+.mega-drop{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);
+  background:var(--bg2);border:1px solid var(--border2);border-radius:18px;
+  box-shadow:var(--sh-lg);padding:28px;min-width:580px;
+  opacity:0;pointer-events:none;transition:all .2s;z-index:3000}
+.mega-drop.wide{min-width:720px}
+.nav-links>li:hover .mega-drop{opacity:1;pointer-events:all}
+.mega-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.mega-item{padding:10px 14px;border-radius:10px;cursor:pointer;transition:all .2s;border:1px solid transparent}
+.mega-item:hover{background:var(--card);border-color:var(--border)}
+.mega-item-title{font-size:13px;font-weight:700;color:var(--txt);margin-bottom:2px}
+.mega-item-sub{font-size:12px;color:var(--txt3);line-height:1.4}
+.mega-sec-title{font-size:11px;font-weight:700;color:var(--txt3);text-transform:uppercase;
+  letter-spacing:.08em;margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--border)}
+.mega-team-card{background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:22px}
+.mega-team-card h4{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--txt);
+  margin-bottom:12px;line-height:1.35}
+.m-avs{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.m-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:12px;font-weight:700;color:#fff;border:2px solid var(--border2)}
+
+/* ── MARQUEE ── */
+.marquee-wrap{background:var(--acc);overflow:hidden;padding:13px 0}
+.marquee-track{display:flex;width:max-content;animation:marq 28s linear infinite}
+.marquee-item{display:flex;align-items:center;gap:16px;padding:0 32px;
+  font-family:var(--fd);font-size:15px;font-weight:700;color:#fff;white-space:nowrap}
+.marquee-item span{opacity:.55;font-size:18px}
+@keyframes marq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.marquee-wrap:hover .marquee-track{animation-play-state:paused}
+
+/* ══════════════════ HOME ══════════════════ */
+.home-hero{min-height:100vh;background:linear-gradient(160deg,var(--bg) 0%,#0c1e36 55%,var(--bg) 100%);
+  display:flex;align-items:center;padding:100px 0 60px;position:relative;overflow:hidden}
+.hero-grid-bg{position:absolute;inset:0;background-image:
+  linear-gradient(var(--border) 1px,transparent 1px),
+  linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:60px 60px;opacity:.25;pointer-events:none}
+.hero-glow{position:absolute;top:-200px;right:-200px;width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(45,142,245,.15) 0%,transparent 65%);pointer-events:none}
+.hero-glow2{position:absolute;bottom:-200px;left:-150px;width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(34,211,160,.08) 0%,transparent 65%);pointer-events:none}
+.hero-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:9px;background:var(--acc-soft);
+  border:1px solid var(--border2);border-radius:30px;padding:7px 18px;margin-bottom:28px}
+.hero-pulse{width:8px;height:8px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 0 3px rgba(34,211,160,.25);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(34,211,160,.25)}50%{box-shadow:0 0 0 6px rgba(34,211,160,.1)}}
+.hero-badge-txt{font-size:13px;font-weight:600;color:var(--txt2)}
+.hero-h1{font-size:clamp(38px,6vw,72px);font-weight:800;line-height:1.06;
+  color:var(--txt);margin-bottom:22px}
+.hero-h1 .acc{color:var(--acc)}
+.hero-h1 .role{display:block;min-height:1.15em;transition:opacity .3s;color:var(--acc)}
+.hero-sub{font-size:17px;color:var(--txt2);line-height:1.8;max-width:480px;margin-bottom:36px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:52px}
+.hero-stats{display:flex;gap:36px;flex-wrap:wrap;padding-top:32px;border-top:1px solid var(--border)}
+.hs-num{font-family:var(--fd);font-size:30px;font-weight:800;color:var(--acc)}
+.hs-lbl{font-size:12px;color:var(--txt3);font-weight:500;margin-top:3px}
+
+/* Profile card */
+.profile-card{background:var(--card);border:1px solid var(--border2);border-radius:24px;
+  padding:30px;box-shadow:var(--sh-lg);position:relative;z-index:2}
+.pc-avatar{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--acc2));
+  display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;
+  color:#fff;font-family:var(--fd);margin-bottom:16px;border:3px solid var(--border2)}
+.pc-name{font-family:var(--fd);font-size:21px;font-weight:700;color:var(--txt)}
+.pc-role{font-size:13px;color:var(--acc);font-weight:600;margin-bottom:18px}
+.stack-lbl{font-size:11px;font-weight:700;color:var(--txt3);text-transform:uppercase;
+  letter-spacing:.06em;margin-bottom:8px}
+.stack-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.sc{font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;
+  background:var(--acc-soft);color:var(--acc);border:1px solid var(--border2)}
+.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mini-item{background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+  padding:10px 12px;display:flex;align-items:center;gap:8px}
+.mi-val{font-size:13px;font-weight:700;color:var(--txt)}
+.mi-key{font-size:11px;color:var(--txt3);font-weight:500}
+/* Float badges */
+.fbadge{position:absolute;background:var(--card2);border:1px solid var(--border2);
+  border-radius:12px;padding:9px 14px;box-shadow:var(--sh-card);
+  display:flex;align-items:center;gap:8px;white-space:nowrap;z-index:3}
+.fb-t{font-size:12px;font-weight:700;color:var(--txt)}
+.fb-s{font-size:10px;color:var(--txt3)}
+
+/* Trust bar */
+.trust-bar{padding:44px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  background:var(--bg2)}
+.trust-lbl{font-size:12px;color:var(--txt3);font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;margin-bottom:22px;text-align:center}
+.trust-logos{display:flex;justify-content:center;align-items:center;gap:44px;flex-wrap:wrap}
+.trust-logo{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--border2);
+  letter-spacing:-.02em;transition:color .2s;cursor:default}
+.trust-logo:hover{color:var(--txt2)}
+
+/* Why us */
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.why-card{background:var(--card);border:1px solid var(--border);border-radius:20px;
+  padding:28px 24px;transition:all .3s;cursor:default}
+.why-card:hover{border-color:var(--acc);box-shadow:0 8px 32px var(--acc-glow);transform:translateY(-4px)}
+.why-icon{font-size:30px;margin-bottom:16px}
+.why-title{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--txt);margin-bottom:8px}
+.why-desc{font-size:13px;color:var(--txt2);line-height:1.7}
+
+/* Services mega */
+.svc-mega{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.svc-list{display:flex;flex-direction:column;gap:0}
+.svc-row{padding:17px 0;border-bottom:1px solid var(--border);display:flex;
+  align-items:center;justify-content:space-between;cursor:pointer;transition:all .2s}
+.svc-row:hover .svc-row-t{color:var(--acc)}
+.svc-row:hover .svc-arr{opacity:1;transform:translateX(4px);color:var(--acc)}
+.svc-row-t{font-family:var(--fd);font-size:16px;font-weight:600;color:var(--txt2);transition:color .2s}
+.svc-arr{opacity:.25;font-size:18px;transition:all .2s;color:var(--txt2)}
+.svc-right-card{background:var(--card);border:1px solid var(--border2);border-radius:22px;
+  padding:30px;position:sticky;top:88px}
+.src-eyebrow{font-size:11px;font-weight:700;color:var(--acc);text-transform:uppercase;
+  letter-spacing:.08em;margin-bottom:10px}
+.src-title{font-family:var(--fd);font-size:20px;font-weight:700;color:var(--txt);
+  margin-bottom:14px;line-height:1.35}
+.src-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:22px}
+.src-list li{font-size:13px;color:var(--txt2);display:flex;align-items:center;gap:8px}
+.src-list li::before{content:'→';color:var(--acc);font-weight:700;flex-shrink:0}
+
+/* Industries cloud */
+.ind-cloud{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.ind-tag{padding:8px 16px;border-radius:30px;font-size:13px;font-weight:600;cursor:pointer;
+  border:1.5px solid var(--border2);background:var(--card);color:var(--txt2);
+  transition:all .25s;display:flex;align-items:center;gap:6px}
+.ind-tag:hover,.ind-tag.active{background:var(--acc);color:#fff;border-color:var(--acc);
+  box-shadow:var(--sh-acc)}
+.ind-tag sup{font-size:9px;background:var(--border2);color:var(--txt2);border-radius:10px;
+  padding:1px 5px;font-weight:700}
+.ind-tag.active sup{background:rgba(255,255,255,.25);color:#fff}
+
+/* CTA strip */
+.cta-strip{background:var(--card);border:1px solid var(--border2);border-radius:20px;
+  display:flex;align-items:center;justify-content:space-between;padding:28px 36px;
+  gap:24px;flex-wrap:wrap;box-shadow:var(--sh-card)}
+.cta-strip h3{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--txt)}
+.cta-strip h3 span{color:var(--acc)}
+
+/* Cases grid */
+.cases-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.case-card{background:var(--card);border:1px solid var(--border);border-radius:20px;
+  overflow:hidden;cursor:pointer;transition:all .3s}
+.case-card:hover{transform:translateY(-6px);border-color:var(--acc);box-shadow:0 16px 48px var(--acc-glow)}
+.case-thumb{height:185px;display:flex;align-items:center;justify-content:center;
+  font-size:56px;position:relative}
+.case-cat{position:absolute;top:12px;left:12px;font-size:11px;font-weight:700;
+  padding:3px 10px;border-radius:8px;background:rgba(11,24,41,.75);color:var(--txt2);
+  border:1px solid var(--border2);backdrop-filter:blur(6px)}
+.case-body{padding:22px}
+.case-title{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--txt);margin-bottom:7px}
+.case-desc{font-size:13px;color:var(--txt2);line-height:1.65;margin-bottom:14px}
+.case-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.cs-stat{font-size:11px;font-weight:700;padding:3px 9px;border-radius:7px}
+.rm-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;
+  color:var(--txt2);border:1.5px solid var(--border2);border-radius:30px;padding:7px 16px;
+  transition:all .2s;background:none;cursor:pointer}
+.rm-btn:hover{border-color:var(--acc);color:var(--acc)}
+
+/* Blog preview */
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.blog-card{background:var(--card);border:1px solid var(--border);border-radius:18px;
+  overflow:hidden;cursor:pointer;transition:all .3s}
+.blog-card:hover{transform:translateY(-4px);border-color:var(--acc);box-shadow:0 10px 32px var(--acc-glow)}
+.blog-thumb{height:154px;display:flex;align-items:center;justify-content:center;font-size:44px}
+.blog-body{padding:20px}
+.blog-cat{font-size:11px;font-weight:700;color:var(--acc);text-transform:uppercase;
+  letter-spacing:.05em;margin-bottom:6px}
+.blog-title{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--txt);
+  margin-bottom:8px;line-height:1.4}
+.blog-meta{font-size:12px;color:var(--txt3);display:flex;align-items:center;gap:10px}
+.blog-meta .dot{width:3px;height:3px;border-radius:50%;background:var(--txt3)}
+
+/* Testimonials */
+.testi-feat{background:var(--card);border:1px solid var(--border2);border-radius:26px;
+  padding:44px 52px;position:relative;overflow:hidden;box-shadow:var(--sh-card)}
+.quote-mark{position:absolute;top:14px;right:30px;font-size:130px;color:var(--border2);
+  line-height:1;font-family:Georgia,serif;pointer-events:none;user-select:none;opacity:.6}
+.testi-layout{display:flex;gap:40px;align-items:flex-start;position:relative;z-index:1}
+.testi-av{width:76px;height:76px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:24px;font-weight:800;color:#fff;font-family:var(--fd);
+  flex-shrink:0;border:3px solid var(--border2)}
+.testi-quote{font-size:17px;color:var(--txt2);line-height:1.8;font-style:italic;margin-bottom:20px}
+.testi-name{font-family:var(--fd);font-weight:700;font-size:15px;color:var(--txt)}
+.testi-role{font-size:13px;color:var(--txt3)}
+.tc-wrap{display:flex;justify-content:flex-end;align-items:center;gap:10px;margin-top:24px}
+.tc-btn{width:40px;height:40px;border-radius:10px;border:1.5px solid var(--border2);
+  background:var(--card2);cursor:pointer;font-size:16px;transition:all .2s;
+  color:var(--txt2);display:flex;align-items:center;justify-content:center}
+.tc-btn:hover{background:var(--acc);color:#fff;border-color:var(--acc)}
+.av-row{display:flex;justify-content:center;gap:10px;margin:24px 0}
+.av-dot{border-radius:50%;border:3px solid transparent;font-weight:700;
+  font-size:12px;font-family:var(--fd);color:#fff;cursor:pointer;transition:all .2s}
+.av-dot.active{transform:scale(1.15)}
+
+/* Rating bars */
+.rating-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.rcard{background:var(--card2);border:1px solid var(--border);border-radius:14px;padding:15px 17px}
+.rcard-row{display:flex;justify-content:space-between;margin-bottom:7px}
+.rcard-lbl{font-size:13px;font-weight:600;color:var(--txt2)}
+.rcard-pct{font-size:13px;font-weight:700;color:var(--acc)}
+.rbar{height:6px;background:var(--border2);border-radius:3px;overflow:hidden}
+.rbar-fill{height:100%;background:linear-gradient(90deg,var(--acc),var(--acc2));border-radius:3px}
+
+/* Pricing */
+.pricing-toggle{display:inline-flex;align-items:center;gap:14px;background:var(--card);
+  border:1.5px solid var(--border2);border-radius:40px;padding:6px 6px 6px 16px;margin-bottom:40px}
+.pt-lbl{font-size:14px;font-weight:600;transition:color .2s}
+.pt-track{width:48px;height:26px;border-radius:13px;border:none;cursor:pointer;
+  position:relative;transition:background .3s}
+.pt-thumb{position:absolute;top:3px;width:20px;height:20px;border-radius:50%;
+  background:#fff;transition:left .3s;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.save-pill{font-size:11px;font-weight:700;padding:3px 10px;border-radius:12px;
+  background:rgba(34,211,160,.15);color:var(--green);border:1px solid rgba(34,211,160,.3)}
+.plans-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start;margin-bottom:48px}
+.pcard{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:30px;position:relative}
+.pcard.feat{background:linear-gradient(155deg,#0e2b52,#0d3872);border-color:var(--acc);
+  box-shadow:0 0 0 1px var(--acc),0 20px 60px var(--acc-glow);transform:scale(1.04)}
+.pcard.light,.pcard.ent{border-color:var(--border2)}
+.pop-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  background:var(--acc);color:#fff;font-weight:700;font-size:11px;padding:4px 18px;
+  border-radius:20px;box-shadow:var(--sh-acc);white-space:nowrap}
+.pcard-name{font-family:var(--fd);font-size:18px;font-weight:700;margin-bottom:3px}
+.pcard-tag{font-size:12px;font-weight:500;line-height:1.4}
+.pcard-price{font-family:var(--fd);font-size:46px;font-weight:800;line-height:1;margin-top:18px}
+.pcard-note{font-size:12px;margin-bottom:18px;margin-top:4px}
+.pcard-btn{width:100%;padding:13px;border-radius:12px;border:none;cursor:pointer;
+  font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;
+  gap:7px;transition:all .22s;margin-bottom:22px}
+.pcard-btn:hover{transform:translateY(-2px)}
+.pfeats{list-style:none;display:flex;flex-direction:column;gap:9px}
+.pfeat{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:500}
+.ao-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.ao-card{background:var(--card);border:1px solid var(--border);border-radius:14px;
+  padding:15px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.ao-name{font-size:14px;font-weight:700;color:var(--txt);margin-bottom:2px}
+.ao-desc{font-size:12px;color:var(--txt3);line-height:1.4}
+.ao-price{font-size:13px;font-weight:700;color:var(--acc);background:var(--acc-soft);
+  padding:5px 12px;border-radius:10px;white-space:nowrap;border:1px solid var(--border2)}
+
+/* Contact */
+.ct-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:52px}
+.ci-item{display:flex;align-items:center;gap:13px;margin-bottom:14px}
+.ci-icon{width:44px;height:44px;border-radius:12px;background:var(--acc-soft);
+  border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ci-lbl{font-size:11px;color:var(--txt3);font-weight:600}
+.ci-val{font-size:14px;font-weight:600;color:var(--txt2)}
+.ci-val.link{color:var(--acc)}
+.form-card{background:var(--card);border:1px solid var(--border2);border-radius:22px;
+  padding:36px;box-shadow:var(--sh-lg)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fg{margin-bottom:14px}
+.fl{font-size:13px;font-weight:600;color:var(--txt2);display:block;margin-bottom:5px}
+.fi{width:100%;padding:11px 14px;border-radius:9px;font-size:14px;border:1.5px solid var(--border2);
+  background:var(--bg2);color:var(--txt);outline:none;transition:border-color .2s}
+.fi:focus{border-color:var(--acc)}
+.fi.err{border-color:var(--red)}
+textarea.fi{resize:vertical;min-height:112px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.fchip{padding:6px 14px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;
+  border:1.5px solid var(--border2);background:var(--card2);color:var(--txt2);transition:all .2s}
+.fchip.active{background:var(--acc);color:#fff;border-color:var(--acc)}
+.sub-btn{width:100%;padding:14px;border-radius:12px;border:none;
+  background:var(--acc);color:#fff;font-weight:700;font-size:15px;
+  cursor:pointer;box-shadow:var(--sh-acc);transition:all .22s;
+  display:flex;align-items:center;justify-content:center;gap:8px}
+.sub-btn:hover{background:var(--acc2);transform:translateY(-2px);box-shadow:0 8px 28px var(--acc-glow)}
+.form-note{font-size:12px;color:var(--txt3);text-align:center;margin-top:10px}
+.em{font-size:12px;color:var(--red);margin-top:3px}
+
+/* ══ SOLUTIONS PAGE ══ */
+.page-hero-dark{background:linear-gradient(160deg,var(--bg2) 0%,var(--bg) 100%);
+  padding:140px 0 80px;position:relative;overflow:hidden}
+.page-hero-dark::before{content:'';position:absolute;inset:0;
+  background-image:linear-gradient(var(--border) 1px,transparent 1px),
+  linear-gradient(90deg,var(--border) 1px,transparent 1px);
+  background-size:60px 60px;opacity:.2;pointer-events:none}
+.page-hero-dark h1{font-size:clamp(36px,5vw,60px);font-weight:800;color:var(--txt);
+  margin-bottom:16px;position:relative;z-index:1}
+.page-hero-dark p{font-size:17px;color:var(--txt2);max-width:540px;line-height:1.75;
+  position:relative;z-index:1}
+.sol-mega{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;
+  border:1px solid var(--border2);border-radius:20px;overflow:hidden}
+.sol-col{padding:40px 32px;border-right:1px solid var(--border)}
+.sol-col:last-child{border-right:none;background:var(--card2)}
+.sol-col-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--txt3);margin-bottom:22px;display:flex;align-items:center;gap:8px}
+.sol-link{display:block;padding:10px 0;font-size:15px;font-weight:600;color:var(--txt2);
+  border-bottom:1px solid var(--border);transition:all .2s;cursor:pointer}
+.sol-link:hover{color:var(--acc);padding-left:6px}
+.sol-link:last-of-type{border-bottom:none}
+
+/* ── INDUSTRY ── */
+.ind-feats-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.ind-feat{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;
+  transition:all .3s}
+.ind-feat:hover{border-color:var(--acc);box-shadow:0 8px 28px var(--acc-glow)}
+.ind-feat-title{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--txt);margin-bottom:8px}
+.ind-feat-desc{font-size:13px;color:var(--txt2);line-height:1.7}
+
+/* ── CASE STUDIES ── */
+.cs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+
+/* ── BLOG ── */
+.blog-page-grid{display:grid;grid-template-columns:2fr 1fr;gap:44px}
+.post-card{background:var(--card);border:1px solid var(--border);border-radius:18px;
+  overflow:hidden;margin-bottom:22px;cursor:pointer;transition:all .3s}
+.post-card:hover{border-color:var(--acc);box-shadow:0 8px 32px var(--acc-glow)}
+.post-thumb{height:195px;display:flex;align-items:center;justify-content:center;font-size:56px}
+.post-body{padding:24px}
+.post-cat{font-size:11px;font-weight:700;color:var(--acc);text-transform:uppercase;
+  letter-spacing:.05em;margin-bottom:7px}
+.post-title{font-family:var(--fd);font-size:19px;font-weight:700;color:var(--txt);
+  margin-bottom:10px;line-height:1.35}
+.post-exc{font-size:14px;color:var(--txt2);line-height:1.7;margin-bottom:14px}
+.post-meta{display:flex;align-items:center;gap:14px;font-size:13px;color:var(--txt3)}
+.post-meta .dot{width:3px;height:3px;border-radius:50%;background:var(--txt3)}
+.sw{background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:22px;margin-bottom:18px}
+.sw-title{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--txt);margin-bottom:14px}
+.rp-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.rp-item:last-child{border-bottom:none}
+.rp-thumb{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;
+  justify-content:center;font-size:22px;flex-shrink:0;background:var(--bg2)}
+.rp-title{font-size:13px;font-weight:600;color:var(--txt);line-height:1.4}
+.rp-date{font-size:11px;color:var(--txt3);margin-top:3px}
+.tag-cloud{display:flex;flex-wrap:wrap;gap:7px}
+.btag{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;
+  background:var(--card2);color:var(--txt2);cursor:pointer;transition:all .2s;
+  border:1px solid var(--border)}
+.btag:hover{background:var(--acc-soft);color:var(--acc);border-color:var(--border2)}
+.prev-next{display:grid;grid-template-columns:1fr 1px 1fr;
+  background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.pn-col{padding:20px 24px;cursor:pointer;transition:background .2s}
+.pn-col:hover{background:var(--card2)}
+.pn-label{font-size:12px;color:var(--txt3);margin-bottom:4px}
+.pn-title{font-size:14px;font-weight:700;color:var(--txt2)}
+.pn-sep{background:var(--border)}
+
+/* ── ABOUT ── */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.about-img{border-radius:22px;height:420px;display:flex;align-items:center;
+  justify-content:center;font-size:80px;
+  background:linear-gradient(135deg,var(--bg2),var(--card2));border:1px solid var(--border2)}
+.skill-bars{display:flex;flex-direction:column;gap:14px}
+.sb-item{}
+.sb-labels{display:flex;justify-content:space-between;font-size:13px;font-weight:600;
+  color:var(--txt2);margin-bottom:6px}
+.sb-track{height:8px;background:var(--border2);border-radius:4px;overflow:hidden}
+.sb-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--acc),var(--acc2))}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
+.team-card{background:var(--card);border:1px solid var(--border);border-radius:18px;
+  padding:24px;text-align:center;transition:all .3s}
+.team-card:hover{border-color:var(--acc);box-shadow:0 8px 28px var(--acc-glow)}
+.team-av{width:68px;height:68px;border-radius:50%;margin:0 auto 14px;
+  display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;
+  font-family:var(--fd);color:#fff}
+.team-name{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--txt);margin-bottom:3px}
+.team-role{font-size:13px;color:var(--txt3);font-weight:500}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.val-card{background:var(--card2);border:1px solid var(--border);border-radius:18px;padding:26px;
+  transition:all .3s}
+.val-card:hover{border-color:var(--acc)}
+.val-icon{font-size:30px;margin-bottom:12px}
+.val-title{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--txt);margin-bottom:7px}
+.val-desc{font-size:13px;color:var(--txt2);line-height:1.7}
+
+/* ── CAREERS ── */
+.careers-hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.no-jobs{background:var(--card);border:1.5px dashed var(--border2);border-radius:20px;
+  padding:60px;text-align:center;box-shadow:var(--sh-card)}
+.no-jobs-icon{font-size:52px;margin-bottom:16px}
+.no-jobs-title{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--txt);margin-bottom:8px}
+.no-jobs-sub{font-size:15px;color:var(--txt2);margin-bottom:24px}
+.perks-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.perk-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;transition:all .3s}
+.perk-card:hover{border-color:var(--acc)}
+.perk-icon{font-size:26px;margin-bottom:9px}
+.perk-title{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--txt);margin-bottom:5px}
+.perk-desc{font-size:13px;color:var(--txt2);line-height:1.6}
+
+/* ── FOOTER ── */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding-top:60px}
+.foot-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1fr;gap:44px;
+  padding-bottom:48px;border-bottom:1px solid var(--border)}
+.foot-desc{font-size:14px;color:var(--txt3);line-height:1.75;max-width:260px;margin:14px 0 22px}
+.foot-soc{display:flex;gap:8px}
+.fsoc-btn{width:36px;height:36px;border-radius:8px;background:var(--card);
+  border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;
+  font-size:13px;color:var(--txt3);cursor:pointer;transition:all .2s;text-decoration:none}
+.fsoc-btn:hover{background:var(--acc);color:#fff;border-color:var(--acc)}
+.foot-col-title{font-size:11px;font-weight:700;color:var(--txt2);text-transform:uppercase;
+  letter-spacing:.08em;margin-bottom:18px}
+.foot-links{list-style:none;display:flex;flex-direction:column;gap:9px}
+.foot-links a{font-size:13px;color:var(--txt3);transition:color .2s;cursor:pointer}
+.foot-links a:hover{color:var(--acc)}
+.foot-bottom{display:flex;justify-content:space-between;align-items:center;
+  padding:22px 0;flex-wrap:wrap;gap:10px}
+.foot-copy{font-size:13px;color:var(--txt3)}
+.foot-legal{display:flex;gap:20px}
+.foot-legal a{font-size:12px;color:var(--txt3);cursor:pointer;transition:color .2s}
+.foot-legal a:hover{color:var(--acc)}
+.back-top{width:36px;height:36px;border-radius:8px;background:var(--card);
+  border:1px solid var(--border2);font-size:16px;color:var(--txt3);cursor:pointer;
+  transition:all .2s;display:flex;align-items:center;justify-content:center}
+.back-top:hover{background:var(--acc);color:#fff;border-color:var(--acc)}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:1024px){
+  .why-grid{grid-template-columns:repeat(2,1fr)}
+  .cases-grid,.blog-grid,.cs-grid{grid-template-columns:repeat(2,1fr)}
+  .blog-page-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .hero-layout{grid-template-columns:1fr}
+  .hero-profile-wrap{display:none}
+  .rating-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:768px){
+  .nav-links,.nav-cta,.nav-phone{display:none}
+  .hamburger{display:block}
+  .section{padding:64px 0}
+  .plans-row{grid-template-columns:1fr}
+  .pcard.feat{transform:none}
+  .ct-grid,.about-grid,.careers-hero-grid{grid-template-columns:1fr}
+  .sol-mega{grid-template-columns:1fr}
+  .cases-grid,.blog-grid,.cs-grid{grid-template-columns:1fr}
+  .values-grid,.perks-grid,.team-grid{grid-template-columns:1fr 1fr}
+  .ind-feats-grid{grid-template-columns:1fr}
+  .testi-layout{flex-direction:column}
+  .testi-feat{padding:28px 24px}
+  .foot-grid{grid-template-columns:1fr}
+  .rating-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){
+  .values-grid,.perks-grid{grid-template-columns:1fr}
+  .frow{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<header id="mainNav">
+<div class="wrap nav-wrap">
+  <div class="logo" onclick="showPage('home')">
+    <div class="logo-box">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+    </div>
+    DevPortfolio
+  </div>
+  <div class="nav-phone">📞 <strong style="color:var(--txt)">+1 (555) 012-3456</strong></div>
+  <ul class="nav-links">
+    <li><a id="nh" class="anav" onclick="showPage('home',event)">Home</a></li>
+    <li>
+      <button id="ns" onclick="showPage('solutions',event)">Solutions ▾</button>
+      <div class="mega-drop wide">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px">
+          <div>
+            <div class="mega-sec-title">Services We Offer</div>
+            <div style="display:flex;flex-direction:column;gap:2px">
+              <div class="mega-item" onclick="showPage('solutions')"><div class="mega-item-title">Web App Development</div><div class="mega-item-sub">Scalable apps, idea to production</div></div>
+              <div class="mega-item" onclick="showPage('solutions')"><div class="mega-item-title">E-Commerce Solutions</div><div class="mega-item-sub">Stores that convert & scale</div></div>
+              <div class="mega-item" onclick="showPage('solutions')"><div class="mega-item-title">UI/UX Design Services</div><div class="mega-item-sub">Interfaces users love</div></div>
+              <div class="mega-item" onclick="showPage('solutions')"><div class="mega-item-title">Mobile App Development</div><div class="mega-item-sub">iOS & Android cross-platform</div></div>
+              <div class="mega-item" onclick="showPage('solutions')"><div class="mega-item-title">AI Automation Solutions</div><div class="mega-item-sub">Automate with intelligence</div></div>
+              <div class="mega-item" onclick="showPage('solutions')"><div class="mega-item-title">Cloud & DevOps</div><div class="mega-item-sub">Reliable infra at any scale</div></div>
+            </div>
+          </div>
+          <div>
+            <div class="mega-sec-title">Industries We Cover</div>
+            <div style="display:flex;flex-direction:column;gap:2px">
+              <div class="mega-item" onclick="showIndustry('fintech')"><div class="mega-item-title">Fintech & Banking</div></div>
+              <div class="mega-item" onclick="showIndustry('healthcare')"><div class="mega-item-title">Healthcare</div></div>
+              <div class="mega-item" onclick="showIndustry('logistics')"><div class="mega-item-title">Logistics & Transportation</div></div>
+              <div class="mega-item" onclick="showIndustry('ecommerce')"><div class="mega-item-title">E-Commerce & Retail</div></div>
+              <div class="mega-item" onclick="showIndustry('realestate')"><div class="mega-item-title">Real Estate & Property</div></div>
+              <div class="mega-item" onclick="showIndustry('media')"><div class="mega-item-title">Media & Entertainment</div></div>
+            </div>
+            <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+              <a onclick="showPage('solutions')" style="font-size:13px;font-weight:700;color:var(--acc);cursor:pointer">Check All Industries →</a>
+            </div>
+          </div>
+          <div class="mega-team-card">
+            <h4>A dynamic team built to solve problems with ease</h4>
+            <button class="btn-acc" onclick="showPage('contact')" style="font-size:13px;padding:9px 18px;border-radius:30px">Let's Talk ↗</button>
+            <div class="m-avs">
+              <div class="m-av" style="background:var(--acc)">AC</div>
+              <div class="m-av" style="background:var(--purple)">JK</div>
+              <div class="m-av" style="background:var(--green);color:#000">SM</div>
+              <div class="m-av" style="background:var(--amber);color:#000">LN</div>
+              <div class="m-av" style="background:var(--red)">PR</div>
+              <div class="m-av" style="background:var(--cyan);color:#000">MW</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li>
+      <button id="nc" onclick="showPage('about',event)">Company ▾</button>
+      <div class="mega-drop">
+        <div class="mega-sec-title">Company</div>
+        <div class="mega-grid">
+          <div class="mega-item" onclick="showPage('about')"><div class="mega-item-title">About Us</div><div class="mega-item-sub">Our story & values</div></div>
+          <div class="mega-item" onclick="showPage('casestudies')"><div class="mega-item-title">Case Studies</div><div class="mega-item-sub">Real results</div></div>
+          <div class="mega-item" onclick="showPage('blog')"><div class="mega-item-title">News & Insights</div><div class="mega-item-sub">Articles & guides</div></div>
+          <div class="mega-item" onclick="showPage('careers')"><div class="mega-item-title">Careers</div><div class="mega-item-sub">Join the team</div></div>
+        </div>
+      </div>
+    </li>
+    <li>
+      <button id="nr" onclick="showPage('blog',event)">Resources ▾</button>
+      <div class="mega-drop">
+        <div class="mega-sec-title">Resources</div>
+        <div class="mega-grid">
+          <div class="mega-item" onclick="showPage('blog')"><div class="mega-item-title">Blog & Articles</div><div class="mega-item-sub">Insights from the team</div></div>
+          <div class="mega-item" onclick="showPage('casestudies')"><div class="mega-item-title">Case Studies</div><div class="mega-item-sub">See how we solve problems</div></div>
+          <div class="mega-item" onclick="showPage('contact')"><div class="mega-item-title">Free Consultation</div><div class="mega-item-sub">30 min discovery call</div></div>
+          <div class="mega-item" onclick="showPage('home')"><div class="mega-item-title">Pricing Guide</div><div class="mega-item-sub">Transparent packages</div></div>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <button class="nav-cta" onclick="showPage('contact')">Contact Us ↗</button>
+  <button class="hamburger" onclick="togMob()">☰</button>
+</div>
+<div class="mob-menu" id="mobMenu">
+  <a class="mob-link" onclick="showPage('home');closeMob()">Home</a>
+  <a class="mob-link" onclick="showPage('solutions');closeMob()">Solutions</a>
+  <a class="mob-link" onclick="showPage('about');closeMob()">About Us</a>
+  <a class="mob-link" onclick="showPage('casestudies');closeMob()">Case Studies</a>
+  <a class="mob-link" onclick="showPage('blog');closeMob()">Blog</a>
+  <a class="mob-link" onclick="showPage('careers');closeMob()">Careers</a>
+  <a class="mob-link" onclick="showPage('contact');closeMob()" style="color:var(--acc)">Contact Us →</a>
+</div>
+</header>
+
+<!-- ══════════ PAGES ══════════ -->
+
+<!-- ── HOME ── -->
+<div class="page active" id="page-home">
+
+<section class="home-hero">
+  <div class="hero-grid-bg"></div><div class="hero-glow"></div><div class="hero-glow2"></div>
+  <div class="wrap" style="width:100%;position:relative;z-index:1">
+    <div class="hero-layout">
+      <div>
+        <div class="hero-badge"><span class="hero-pulse"></span><span class="hero-badge-txt">Build Smarter. Scale Faster.</span></div>
+        <h1 class="hero-h1">Powering<br>Digital Growth<br>Through <span class="acc role" id="heroRole">Innovation</span></h1>
+        <p class="hero-sub">From idea to launch — scalable digital products that move fast, look great, and deliver real results. Trusted by businesses across 12 countries.</p>
+        <div class="hero-btns">
+          <button class="btn-acc" onclick="showPage('contact')">Your Next Big Product Starts Here ↗</button>
+          <button class="btn-ghost" onclick="showPage('casestudies')">View Case Studies</button>
+        </div>
+        <div class="hero-stats">
+          <div><div class="hs-num">48+</div><div class="hs-lbl">Completed Projects</div></div>
+          <div><div class="hs-num">35+</div><div class="hs-lbl">Satisfied Clients</div></div>
+          <div><div class="hs-num">5</div><div class="hs-lbl">Years of Work</div></div>
+          <div><div class="hs-num">12</div><div class="hs-lbl">Countries Served</div></div>
+        </div>
+      </div>
+      <div class="hero-profile-wrap" style="position:relative;display:flex;justify-content:center">
+        <div class="profile-card" style="max-width:360px;width:100%">
+          <div class="pc-avatar">AC</div>
+          <div class="pc-name">Alex Carter</div>
+          <div class="pc-role">Senior Web Developer</div>
+          <div class="stack-lbl">Tech Stack</div>
+          <div class="stack-chips">
+            <span class="sc">React</span><span class="sc">Next.js</span><span class="sc">Node.js</span>
+            <span class="sc">TypeScript</span><span class="sc">Tailwind</span><span class="sc">PostgreSQL</span>
+            <span class="sc">Firebase</span><span class="sc">Figma</span>
+          </div>
+          <div class="mini-grid">
+            <div class="mini-item"><span>🌐</span><div><div class="mi-val">48+</div><div class="mi-key">Projects</div></div></div>
+            <div class="mini-item"><span>⭐</span><div><div class="mi-val">5.0</div><div class="mi-key">Rating</div></div></div>
+            <div class="mini-item"><span>⚡</span><div><div class="mi-val">100%</div><div class="mi-key">On-time</div></div></div>
+            <div class="mini-item"><span>📱</span><div><div class="mi-val">Always</div><div class="mi-key">Mobile-first</div></div></div>
+          </div>
+        </div>
+        <div class="fbadge" style="top:13%;left:-9%"><span>⭐</span><div><div class="fb-t">5.0 Rating</div><div class="fb-s">35+ reviews</div></div></div>
+        <div class="fbadge" style="top:13%;right:-9%"><span style="color:var(--green)">✓</span><div><div class="fb-t">Available Now</div><div class="fb-s">Fast turnaround</div></div></div>
+        <div class="fbadge" style="bottom:19%;left:-9%"><span style="color:var(--acc)">⚡</span><div><div class="fb-t">48+ Projects</div><div class="fb-s">On time</div></div></div>
+        <div class="fbadge" style="bottom:19%;right:-9%"><span>🌍</span><div><div class="fb-t">12 Countries</div><div class="fb-s">Worldwide</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trust bar -->
+<div class="trust-bar">
+  <div class="wrap">
+    <div class="trust-lbl">Trusted by companies across industries</div>
+    <div class="trust-logos">
+      <span class="trust-logo">Nesto Group</span><span class="trust-logo">AnalytIQ</span>
+      <span class="trust-logo">ShopEase</span><span class="trust-logo">Bookit Health</span>
+      <span class="trust-logo">FitTrack</span><span class="trust-logo">LaunchPad</span>
+      <span class="trust-logo">VentureCo</span>
+    </div>
+  </div>
+</div>
+
+<!-- Why us -->
+<div class="section">
+  <div class="wrap">
+    <div class="sh center">
+      <div class="eyebrow">Why Work With Me</div>
+      <h2 class="section-h2">Expert. Fast. Dedicated.</h2>
+      <p class="section-sub">Four pillars that make every project a success.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card"><div class="why-icon">🏆</div><div class="why-title">Expert Solutions</div><p class="why-desc">Reliable, scalable software tailored precisely to your business needs and long-term growth goals.</p></div>
+      <div class="why-card"><div class="why-icon">⏱️</div><div class="why-title">Timely Delivery</div><p class="why-desc">100% on-time delivery record. Projects completed on schedule without compromising quality.</p></div>
+      <div class="why-card"><div class="why-icon">💰</div><div class="why-title">Cost Effective</div><p class="why-desc">High-quality development at competitive pricing for maximum ROI. Transparent, no-surprise billing.</p></div>
+      <div class="why-card"><div class="why-icon">🤝</div><div class="why-title">Dedicated Support</div><p class="why-desc">I stay engaged long after launch — maintenance, updates, and growth support on every plan.</p></div>
+    </div>
+    <div class="cta-strip" style="margin-top:44px">
+      <h3>Transform your tech challenges into <span>growth opportunities</span></h3>
+      <button class="btn-acc" onclick="showPage('contact')">Start Your Project ↗</button>
+    </div>
+  </div>
+</div>
+
+<!-- Services mega -->
+<div class="section alt">
+  <div class="wrap">
+    <div class="svc-mega">
+      <div>
+        <div class="eyebrow">Expert Software Services</div>
+        <h2 class="section-h2" style="margin-bottom:28px">Everything you need<br>to build & grow</h2>
+        <div class="svc-list">
+          <div class="svc-row"><span class="svc-row-t">Web Application Development</span><span class="svc-arr">→</span></div>
+          <div class="svc-row"><span class="svc-row-t">E-Commerce Development</span><span class="svc-arr">→</span></div>
+          <div class="svc-row"><span class="svc-row-t">UI/UX Design Services</span><span class="svc-arr">→</span></div>
+          <div class="svc-row"><span class="svc-row-t">Mobile App Development</span><span class="svc-arr">→</span></div>
+          <div class="svc-row"><span class="svc-row-t">AI Automation Solutions</span><span class="svc-arr">→</span></div>
+          <div class="svc-row"><span class="svc-row-t">Cloud Solutions & DevOps</span><span class="svc-arr">→</span></div>
+          <div class="svc-row"><span class="svc-row-t">Custom Software Development</span><span class="svc-arr">→</span></div>
+          <div class="svc-row" style="border:none"><span class="svc-row-t">Blockchain & Web3</span><span class="svc-arr">→</span></div>
+        </div>
+      </div>
+      <div class="svc-right-card">
+        <div class="src-eyebrow">Industries We Cover</div>
+        <div class="src-title">A dynamic team built to solve problems with ease</div>
+        <ul class="src-list">
+          <li>Fintech and Banking</li><li>Healthcare</li>
+          <li>Logistics and Transportation</li><li>E-Commerce and Retail</li>
+          <li>Real Estate and Property</li><li>Media and Entertainment</li>
+          <li>Education and E-Learning</li><li>Travel and Hospitality</li>
+        </ul>
+        <button class="btn-acc" onclick="showPage('solutions')">Check All Industries ↗</button>
+        <div class="m-avs" style="margin-top:20px">
+          <div class="m-av" style="background:var(--acc)">AC</div>
+          <div class="m-av" style="background:var(--purple)">JK</div>
+          <div class="m-av" style="background:var(--green);color:#000">SM</div>
+          <div class="m-av" style="background:var(--amber);color:#000">LN</div>
+          <div class="m-av" style="background:var(--red)">PR</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Industries cloud -->
+<div class="section">
+  <div class="wrap">
+    <div class="sh center">
+      <div class="eyebrow">Industries</div>
+      <h2 class="section-h2">We build for every sector</h2>
+      <p class="section-sub">Specialized solutions for the unique challenges of each industry.</p>
+    </div>
+    <div class="ind-cloud">
+      <div class="ind-tag active" onclick="setInd(this,'fintech')">🏦 Fintech & Banking <sup>12</sup></div>
+      <div class="ind-tag" onclick="setInd(this,'healthcare')">🏥 Healthcare <sup>7</sup></div>
+      <div class="ind-tag" onclick="setInd(this,'ecommerce')">🛒 E-Commerce & Retail <sup>9</sup></div>
+      <div class="ind-tag" onclick="setInd(this,'realestate')">🏡 Real Estate <sup>5</sup></div>
+      <div class="ind-tag" onclick="setInd(this,'logistics')">🚚 Logistics & Transport <sup>6</sup></div>
+      <div class="ind-tag" onclick="setInd(this,'travel')">✈️ Travel & Hospitality <sup>7</sup></div>
+      <div class="ind-tag" onclick="setInd(this,'media')">🎬 Media & Entertainment <sup>8</sup></div>
+      <div class="ind-tag" onclick="setInd(this,'education')">📚 Education & E-Learning <sup>4</sup></div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border2);border-radius:20px;display:flex;align-items:center;justify-content:space-between;padding:26px 34px;margin-top:40px;flex-wrap:wrap;gap:18px;box-shadow:var(--sh-card)">
+      <p style="font-family:var(--fd);font-size:19px;font-weight:700;color:var(--txt);max-width:460px">We Build Long-Lasting Relationships That Don't Stop At Project Delivery.</p>
+      <button class="btn-acc" onclick="showPage('contact')">Hire Developer ↗</button>
+    </div>
+  </div>
+</div>
+
+<!-- Case studies preview -->
+<div class="section alt">
+  <div class="wrap">
+    <div class="sh" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px">
+      <div><div class="eyebrow">Case Studies</div><h2 class="section-h2">Projects that prove results</h2></div>
+      <button class="btn-ghost" onclick="showPage('casestudies')">View All →</button>
+    </div>
+    <div class="cases-grid">
+      <div class="case-card" onclick="showPage('casestudies')">
+        <div class="case-thumb" style="background:linear-gradient(135deg,#0c2440,#0d3060)"><span>🏡</span><span class="case-cat">Real Estate</span></div>
+        <div class="case-body"><div class="case-title">Cloud-Based SaaS Property Management</div><div class="case-desc">Full-stack property platform with listings, payments, tenant portal, and analytics dashboard.</div><div class="case-meta"><span class="cs-stat" style="background:var(--acc-soft);color:var(--acc)">+300% efficiency</span><span class="cs-stat" style="background:rgba(34,211,160,.1);color:var(--green)">React + Node</span></div><button class="rm-btn">Read More ↗</button></div>
+      </div>
+      <div class="case-card" onclick="showPage('casestudies')">
+        <div class="case-thumb" style="background:linear-gradient(135deg,#1a1800,#2a2500)"><span>✈️</span><span class="case-cat">Tourism</span></div>
+        <div class="case-body"><div class="case-title">Custom M-Pesa Payment Plugin Integration</div><div class="case-desc">Mobile money integration for East Africa travel platform — zero-friction checkout flow.</div><div class="case-meta"><span class="cs-stat" style="background:rgba(245,166,35,.1);color:var(--amber)">+85% conversions</span><span class="cs-stat" style="background:rgba(34,211,160,.1);color:var(--green)">WooCommerce</span></div><button class="rm-btn">Read More ↗</button></div>
+      </div>
+      <div class="case-card" onclick="showPage('casestudies')">
+        <div class="case-thumb" style="background:linear-gradient(135deg,#0a2a10,#0d3a18)"><span>🛒</span><span class="case-cat">E-Commerce</span></div>
+        <div class="case-body"><div class="case-title">WooCommerce M-Pesa Integration Plugin</div><div class="case-desc">Public plugin — 2,000+ active installs. Blocks-compatible, tested to WooCommerce V9.8.5.</div><div class="case-meta"><span class="cs-stat" style="background:rgba(34,211,160,.1);color:var(--green)">2,000+ installs</span><span class="cs-stat" style="background:rgba(155,109,255,.1);color:var(--purple)">WordPress</span></div><button class="rm-btn">Read More ↗</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Pricing -->
+<div class="section">
+  <div class="wrap">
+    <div class="sh center">
+      <div class="eyebrow">Transparent Pricing</div>
+      <h2 class="section-h2">Simple, honest pricing</h2>
+      <p class="section-sub">No hidden fees. No surprises. Pick the plan that fits.</p>
+    </div>
+    <div style="text-align:center">
+      <div class="pricing-toggle">
+        <span class="pt-lbl" id="ml" style="color:var(--acc)">Monthly</span>
+        <button class="pt-track" id="ptt" onclick="togBill()" style="background:var(--border2)">
+          <span class="pt-thumb" id="pth" style="left:3px"></span>
+        </button>
+        <span class="pt-lbl" id="al" style="color:var(--txt3)">Annual</span>
+        <span class="save-pill" id="sp" style="display:none">Save 18%</span>
+      </div>
+    </div>
+    <div class="plans-row" id="plansRow"></div>
+    <h3 style="font-family:var(--fd);font-size:20px;font-weight:700;color:var(--txt);margin-bottom:6px">Optional Add-ons</h3>
+    <p style="font-size:14px;color:var(--txt2);margin-bottom:18px">Enhance any plan with extras.</p>
+    <div class="ao-grid" id="aoGrid"></div>
+    <div style="margin-top:30px;text-align:center;padding:22px;background:var(--card);border:1.5px dashed var(--border2);border-radius:14px">
+      <p style="font-size:15px;color:var(--txt2)">Need something custom? <a onclick="showPage('contact')" style="color:var(--acc);font-weight:700;cursor:pointer">Request a tailored quote →</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- Testimonials -->
+<div class="section alt">
+  <div class="wrap">
+    <div class="sh center">
+      <div class="eyebrow">Client Stories</div>
+      <h2 class="section-h2">Don't just take my word for it</h2>
+      <p class="section-sub">Real results from real clients across 12 countries.</p>
+    </div>
+    <div class="testi-feat" id="testiFeat">
+      <div class="quote-mark">"</div>
+      <div class="testi-layout" id="testiBody"></div>
+    </div>
+    <div class="av-row" id="avRow"></div>
+    <div class="rating-grid">
+      <div class="rcard"><div class="rcard-row"><span class="rcard-lbl">Code Quality</span><span class="rcard-pct">98%</span></div><div class="rbar"><div class="rbar-fill" style="width:98%"></div></div></div>
+      <div class="rcard"><div class="rcard-row"><span class="rcard-lbl">Communication</span><span class="rcard-pct">100%</span></div><div class="rbar"><div class="rbar-fill" style="width:100%"></div></div></div>
+      <div class="rcard"><div class="rcard-row"><span class="rcard-lbl">On-time Delivery</span><span class="rcard-pct">96%</span></div><div class="rbar"><div class="rbar-fill" style="width:96%"></div></div></div>
+      <div class="rcard"><div class="rcard-row"><span class="rcard-lbl">Satisfaction</span><span class="rcard-pct">99%</span></div><div class="rbar"><div class="rbar-fill" style="width:99%"></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Blog preview -->
+<div class="section">
+  <div class="wrap">
+    <div class="sh" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px">
+      <div><div class="eyebrow">News & Insights</div><h2 class="section-h2">Latest from the blog</h2></div>
+      <button class="btn-ghost" onclick="showPage('blog')">See All Articles →</button>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card" onclick="showPage('blog')"><div class="blog-thumb" style="background:var(--acc-soft)">📱</div><div class="blog-body"><div class="blog-cat">Mobile Development</div><div class="blog-title">How Much Does It Cost to Build a Mobile App in 2026?</div><div class="blog-meta"><span>Alex Carter</span><span class="dot"></span><span>5 min read</span></div></div></div>
+      <div class="blog-card" onclick="showPage('blog')"><div class="blog-thumb" style="background:rgba(155,109,255,.1)">⚙️</div><div class="blog-body"><div class="blog-cat">Software Strategy</div><div class="blog-title">5 Signs Your Business Has Outgrown Its Software</div><div class="blog-meta"><span>Alex Carter</span><span class="dot"></span><span>7 min read</span></div></div></div>
+      <div class="blog-card" onclick="showPage('blog')"><div class="blog-thumb" style="background:rgba(34,211,160,.08)">🤖</div><div class="blog-body"><div class="blog-cat">AI & Automation</div><div class="blog-title">How To Choose The Right Tech Stack For Your Web App</div><div class="blog-meta"><span>Alex Carter</span><span class="dot"></span><span>6 min read</span></div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Contact -->
+<div class="section alt">
+  <div class="wrap">
+    <div class="sh center">
+      <div class="eyebrow">Get In Touch</div>
+      <h2 class="section-h2">Let's build something great</h2>
+      <p class="section-sub">Fill in the form and I'll get back to you within 24 hours.</p>
+    </div>
+    <div class="ct-grid">
+      <div>
+        <div class="ci-item"><div class="ci-icon">✉️</div><div><div class="ci-lbl">Email</div><a href="mailto:alex@devportfolio.com" class="ci-val link">alex@devportfolio.com</a></div></div>
+        <div class="ci-item"><div class="ci-icon">📞</div><div><div class="ci-lbl">Phone / WhatsApp</div><div class="ci-val">+1 (555) 012-3456</div></div></div>
+        <div class="ci-item"><div class="ci-icon">📍</div><div><div class="ci-lbl">Location</div><div class="ci-val">Remote — Worldwide</div></div></div>
+        <div class="ci-item" style="margin-bottom:28px"><div class="ci-icon">⏰</div><div><div class="ci-lbl">Response time</div><div class="ci-val">Within 24 hours</div></div></div>
+        <div style="background:var(--card);border:1px solid var(--border2);border-radius:18px;padding:24px">
+          <h4 style="font-family:var(--fd);font-size:17px;font-weight:700;color:var(--txt);margin-bottom:8px">Schedule a free call</h4>
+          <p style="font-size:13px;color:var(--txt2);margin-bottom:16px;line-height:1.6">No jargon. No pressure. Just an honest conversation.</p>
+          <button class="btn-acc" style="font-size:13px;padding:9px 18px">Book 30-min Call ↗</button>
+        </div>
+      </div>
+      <div class="form-card" id="hForm"></div>
+    </div>
+  </div>
+</div>
+</div><!-- /home -->
+
+<!-- ── SOLUTIONS ── -->
+<div class="page" id="page-solutions">
+<div class="page-hero-dark">
+  <div class="wrap">
+    <div class="eyebrow">Our Services</div>
+    <h1>Expert Software Services ↗</h1>
+    <p>Powerful digital solutions tailored to your industry and growth stage.</p>
+  </div>
+</div>
+<div class="section">
+  <div class="wrap">
+    <div class="sol-mega">
+      <div class="sol-col">
+        <div class="sol-col-title" style="color:var(--txt3)"><span>⊕</span> Services We Offer</div>
+        <a class="sol-link" onclick="showPage('solutions')">Web Application Development</a>
+        <a class="sol-link" onclick="showPage('solutions')">E-Commerce Development</a>
+        <a class="sol-link" onclick="showPage('solutions')">UI/UX Design Services</a>
+        <a class="sol-link" onclick="showPage('solutions')">Mobile App Development</a>
+        <a class="sol-link" onclick="showPage('solutions')">AI Automation Solutions</a>
+        <a class="sol-link" onclick="showPage('solutions')">Blockchain & Web3</a>
+        <a class="sol-link" onclick="showPage('solutions')">Cloud Solutions & DevOps</a>
+        <a class="sol-link" onclick="showPage('solutions')" style="border:none">Custom Software Development</a>
+      </div>
+      <div class="sol-col">
+        <div class="sol-col-title" style="color:var(--txt3)"><span>⊕</span> Industries We Cover</div>
+        <a class="sol-link" onclick="showIndustry('fintech')">Fintech and Banking</a>
+        <a class="sol-link" onclick="showIndustry('healthcare')">Healthcare</a>
+        <a class="sol-link" onclick="showIndustry('ecommerce')">E-Commerce and Retail</a>
+        <a class="sol-link" onclick="showIndustry('realestate')">Real Estate and Property</a>
+        <a class="sol-link" onclick="showIndustry('logistics')">Logistics and Transportation</a>
+        <a class="sol-link" onclick="showIndustry('travel')">Travel and Hospitality</a>
+        <a class="sol-link" onclick="showIndustry('media')">Media and Entertainment</a>
+        <a class="sol-link" onclick="showIndustry('education')" style="border:none">Education and E-Learning</a>
+        <div style="margin-top:16px"><a onclick="showIndustry('logistics')" style="font-size:13px;font-weight:700;color:var(--acc);cursor:pointer">Check All Industries →</a></div>
+      </div>
+      <div class="sol-col" style="border-right:none;background:var(--card)">
+        <div class="mega-team-card" style="border:none;padding:0;background:transparent">
+          <h4 style="font-family:var(--fd);font-size:18px;font-weight:700;color:var(--txt);margin-bottom:12px;line-height:1.3">A dynamic team built to solve problems with ease</h4>
+          <p style="font-size:13px;color:var(--txt2);margin:8px 0 18px;line-height:1.6">From fintech to healthcare — deep domain expertise on every engagement.</p>
+          <button class="btn-acc" onclick="showPage('contact')" style="font-size:13px;padding:9px 18px;border-radius:30px">Let's Talk ↗</button>
+          <div class="m-avs" style="margin-top:20px">
+            <div class="m-av" style="background:var(--acc)">AC</div>
+            <div class="m-av" style="background:var(--purple)">JK</div>
+            <div class="m-av" style="background:var(--green);color:#000">SM</div>
+            <div class="m-av" style="background:var(--amber);color:#000">LN</div>
+            <div class="m-av" style="background:var(--red)">PR</div>
+            <div class="m-av" style="background:var(--cyan);color:#000">MW</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section alt">
+  <div class="wrap">
+    <div class="sh center"><div class="eyebrow">What We Build</div><h2 class="section-h2">Every service, in depth</h2></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px">
+      <div class="why-card"><div class="why-icon">🌐</div><div class="why-title">Web Application Development</div><p class="why-desc">Full-stack web apps with React/Next.js frontends, Node.js APIs, PostgreSQL databases. From MVPs to enterprise-grade platforms.</p></div>
+      <div class="why-card"><div class="why-icon">🛒</div><div class="why-title">E-Commerce Development</div><p class="why-desc">High-converting stores with Stripe, M-Pesa, and PayPal. Inventory management, analytics, and mobile-first checkout flows.</p></div>
+      <div class="why-card"><div class="why-icon">🎨</div><div class="why-title">UI/UX Design Services</div><p class="why-desc">User research, wireframing, interactive prototypes, and pixel-perfect Figma designs handed off with zero ambiguity.</p></div>
+      <div class="why-card"><div class="why-icon">📱</div><div class="why-title">Mobile App Development</div><p class="why-desc">Cross-platform iOS & Android apps with React Native. Native performance, smooth animations, and App Store deployment.</p></div>
+      <div class="why-card"><div class="why-icon">🤖</div><div class="why-title">AI Automation Solutions</div><p class="why-desc">LLM integrations, workflow automation, AI dashboards, chatbots, document processing, and predictive analytics.</p></div>
+      <div class="why-card"><div class="why-icon">☁️</div><div class="why-title">Cloud Solutions & DevOps</div><p class="why-desc">AWS, GCP, Azure deployments with CI/CD pipelines, Docker, Kubernetes, monitoring, and 99.9% uptime SLAs.</p></div>
+    </div>
+  </div>
+</div>
+<div class="marquee-wrap"><div class="marquee-track" id="m1"></div></div>
+</div>
+
+<!-- ── INDUSTRY (dynamic) ── -->
+<div class="page" id="page-industry">
+<div class="page-hero-dark">
+  <div class="wrap">
+    <div class="eyebrow" id="iEye">Industry</div>
+    <h1 id="iTitle" style="max-width:620px;margin-bottom:16px"></h1>
+    <p id="iSub" style="font-size:17px;color:var(--txt2);max-width:540px;line-height:1.75;position:relative;z-index:1"></p>
+  </div>
+</div>
+<div class="section">
+  <div class="wrap">
+    <div class="sh"><div class="eyebrow" id="iFEye">Solutions</div><h2 class="section-h2" id="iFTitle">What We Build</h2></div>
+    <div class="ind-feats-grid" id="iFGrid"></div>
+  </div>
+</div>
+<div class="section alt" style="text-align:center">
+  <div class="wrap">
+    <h2 class="section-h2" style="max-width:480px;margin:0 auto 14px">Ready to transform your <span id="iInline" style="color:var(--acc)">industry</span>?</h2>
+    <p style="font-size:16px;color:var(--txt2);margin-bottom:28px">Let's build a solution tailored to your business challenges.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <button class="btn-acc" onclick="showPage('contact')">Start a Project ↗</button>
+      <button class="btn-ghost" onclick="showPage('casestudies')">View Case Studies</button>
+    </div>
+  </div>
+</div>
+<div class="marquee-wrap"><div class="marquee-track" id="m2"></div></div>
+</div>
+
+<!-- ── CASE STUDIES ── -->
+<div class="page" id="page-casestudies">
+<div class="page-hero-dark">
+  <div class="wrap">
+    <div class="eyebrow">Portfolio</div>
+    <h1>Real Projects.<br>Measurable Results.</h1>
+    <p>See what we built, how we built it, and the impact it created.</p>
+  </div>
+</div>
+<div class="section">
+  <div class="wrap">
+    <div class="cs-grid">
+      <div class="case-card"><div class="case-thumb" style="background:linear-gradient(135deg,#0c2440,#0d3060)"><span>🏡</span><span class="case-cat">Real Estate · SaaS</span></div><div class="case-body"><div class="case-title">Cloud-Based SaaS Property Management</div><div class="case-desc">A cloud platform for property managers to handle listings, maintenance, rent collection, tenant comms, and financial reporting.</div><div class="case-meta"><span class="cs-stat" style="background:var(--acc-soft);color:var(--acc)">300% efficiency</span><span class="cs-stat" style="background:rgba(34,211,160,.1);color:var(--green)">2.1s load</span></div><button class="rm-btn">Read More ↗</button></div></div>
+      <div class="case-card"><div class="case-thumb" style="background:linear-gradient(135deg,#1a1500,#282000)"><span>✈️</span><span class="case-cat">Tourism · Payments</span></div><div class="case-body"><div class="case-title">Custom M-Pesa Plugin for Msafirico</div><div class="case-desc">WooCommerce payment plugin for M-Pesa STK push with real-time confirmation and reconciliation dashboard.</div><div class="case-meta"><span class="cs-stat" style="background:rgba(245,166,35,.1);color:var(--amber)">85% conversion lift</span><span class="cs-stat" style="background:rgba(34,211,160,.1);color:var(--green)">East Africa</span></div><button class="rm-btn">Read More ↗</button></div></div>
+      <div class="case-card"><div class="case-thumb" style="background:linear-gradient(135deg,#0a1f0d,#0c2d12)"><span>🛒</span><span class="case-cat">E-Commerce · Plugin</span></div><div class="case-body"><div class="case-title">WooCommerce M-Pesa Integration</div><div class="case-desc">Open-source plugin with 2,000+ installs. Blocks-compatible, tested to WooCommerce V9.8.5 with regular security updates.</div><div class="case-meta"><span class="cs-stat" style="background:rgba(34,211,160,.1);color:var(--green)">2,000+ installs</span><span class="cs-stat" style="background:rgba(155,109,255,.1);color:var(--purple)">WordPress.org</span></div><button class="rm-btn">Read More ↗</button></div></div>
+      <div class="case-card"><div class="case-thumb" style="background:linear-gradient(135deg,#1a0a2e,#250e40)"><span>📊</span><span class="case-cat">SaaS · Analytics</span></div><div class="case-body"><div class="case-title">AnalytIQ — Multi-Tenant Analytics Platform</div><div class="case-desc">B2B analytics SaaS with live charts, multi-workspace support, RBAC, CSV exports, and white-label option for agencies.</div><div class="case-meta"><span class="cs-stat" style="background:rgba(155,109,255,.1);color:var(--purple)">1,200+ users</span><span class="cs-stat" style="background:var(--acc-soft);color:var(--acc)">Next.js · Prisma</span></div><button class="rm-btn">Read More ↗</button></div></div>
+      <div class="case-card"><div class="case-thumb" style="background:linear-gradient(135deg,#1a0c00,#281500)"><span>📅</span><span class="case-cat">Healthcare · Mobile</span></div><div class="case-body"><div class="case-title">Bookit — Clinic Appointment System</div><div class="case-desc">React Native app with SMS reminders, Google Calendar sync, digital patient records, and automated invoices.</div><div class="case-meta"><span class="cs-stat" style="background:rgba(245,166,35,.1);color:var(--amber)">−60% no-shows</span><span class="cs-stat" style="background:rgba(155,109,255,.1);color:var(--purple)">React Native</span></div><button class="rm-btn">Read More ↗</button></div></div>
+      <div class="case-card"><div class="case-thumb" style="background:linear-gradient(135deg,#001a1f,#002830)"><span>🚀</span><span class="case-cat">SaaS · Landing Page</span></div><div class="case-body"><div class="case-title">LaunchPad — High-Conversion SaaS Landing Page</div><div class="case-desc">A/B tested landing page achieving 8.4% conversion rate. Animated sections, pricing tables, Mailchimp integration.</div><div class="case-meta"><span class="cs-stat" style="background:rgba(34,211,160,.1);color:var(--green)">8.4% CVR</span><span class="cs-stat" style="background:var(--acc-soft);color:var(--acc)">99 Lighthouse</span></div><button class="rm-btn">Read More ↗</button></div></div>
+    </div>
+  </div>
+</div>
+<div class="marquee-wrap"><div class="marquee-track" id="m3"></div></div>
+</div>
+
+<!-- ── BLOG LIST ── -->
+<div class="page" id="page-blog">
+<style>
+/* Blog-specific styles */
+.blog-hero-img{width:100%;height:320px;object-fit:cover;border-radius:16px;display:block;margin-bottom:28px;border:1px solid var(--border)}
+.blog-hero-img-placeholder{width:100%;height:320px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:80px;margin-bottom:28px;border:1px solid var(--border)}
+.post-card-img{width:100%;height:220px;object-fit:cover;display:block}
+.post-card-img-ph{width:100%;height:220px;display:flex;align-items:center;justify-content:center;font-size:60px}
+.read-btn{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--acc);background:var(--acc-soft);border:1px solid var(--border2);border-radius:30px;padding:7px 16px;cursor:pointer;transition:all .2s;margin-top:4px}
+.read-btn:hover{background:var(--acc);color:#fff;border-color:var(--acc)}
+.post-tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--acc-soft);color:var(--acc);border:1px solid var(--border2);margin-right:6px;margin-bottom:6px}
+.reading-time-badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--txt3);background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:3px 10px}
+
+/* Article page */
+.article-wrap{max-width:800px;margin:0 auto}
+.article-hero-img{width:100%;height:420px;object-fit:cover;border-radius:20px;display:block;border:1px solid var(--border);margin-bottom:36px}
+.article-body{font-size:16px;color:var(--txt2);line-height:1.85}
+.article-body h2{font-family:var(--fd);font-size:24px;font-weight:700;color:var(--txt);margin:40px 0 16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.article-body h3{font-family:var(--fd);font-size:19px;font-weight:700;color:var(--txt);margin:28px 0 12px}
+.article-body p{margin-bottom:18px}
+.article-body ul,.article-body ol{margin:0 0 18px 24px;display:flex;flex-direction:column;gap:8px}
+.article-body li{color:var(--txt2)}
+.article-body strong{color:var(--txt);font-weight:700}
+.article-body blockquote{border-left:3px solid var(--acc);padding:16px 20px;background:var(--acc-soft);border-radius:0 12px 12px 0;margin:24px 0;font-style:italic;color:var(--txt)}
+.article-body img{width:100%;border-radius:14px;border:1px solid var(--border);margin:24px 0;display:block}
+.cost-table{width:100%;border-collapse:collapse;margin:24px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+.cost-table th{background:var(--card2);color:var(--txt);font-family:var(--fd);font-size:13px;font-weight:700;padding:12px 16px;text-align:left;border-bottom:1px solid var(--border)}
+.cost-table td{padding:11px 16px;font-size:13px;color:var(--txt2);border-bottom:1px solid var(--border)}
+.cost-table tr:last-child td{border-bottom:none}
+.cost-table tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+.article-author-card{display:flex;align-items:center;gap:18px;background:var(--card2);border:1px solid var(--border2);border-radius:16px;padding:20px 24px;margin:40px 0}
+.aa-av{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--acc2));display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:#fff;font-family:var(--fd);flex-shrink:0}
+.aa-name{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--txt);margin-bottom:3px}
+.aa-bio{font-size:13px;color:var(--txt2);line-height:1.6}
+.share-row{display:flex;align-items:center;gap:12px;margin-top:32px;padding-top:24px;border-top:1px solid var(--border)}
+.share-lbl{font-size:13px;font-weight:600;color:var(--txt3)}
+.share-btn{padding:7px 16px;border-radius:20px;border:1px solid var(--border2);background:var(--card);color:var(--txt2);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.share-btn:hover{border-color:var(--acc);color:var(--acc)}
+.article-nav{display:grid;grid-template-columns:1fr 1px 1fr;background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:48px}
+.an-col{padding:20px 24px;cursor:pointer;transition:background .2s}
+.an-col:hover{background:var(--card2)}
+.an-lbl{font-size:12px;color:var(--txt3);margin-bottom:4px}
+.an-title{font-size:14px;font-weight:700;color:var(--txt2)}
+.callout{background:linear-gradient(135deg,var(--bg2),var(--card));border:1px solid var(--border2);border-radius:16px;padding:24px 28px;margin:28px 0;display:flex;gap:16px;align-items:flex-start}
+.callout-icon{font-size:24px;flex-shrink:0;margin-top:2px}
+.callout-title{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--txt);margin-bottom:6px}
+.callout-text{font-size:13px;color:var(--txt2);line-height:1.65}
+.stat-boxes{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:24px 0}
+.stat-box{background:var(--card2);border:1px solid var(--border2);border-radius:12px;padding:18px;text-align:center}
+.stat-box-num{font-family:var(--fd);font-size:26px;font-weight:800;color:var(--acc);margin-bottom:4px}
+.stat-box-lbl{font-size:12px;color:var(--txt3);font-weight:500}
+</style>
+
+<!-- Blog index -->
+<div id="blog-index">
+<div class="page-hero-dark">
+  <div class="wrap">
+    <div class="eyebrow">News & Insights</div>
+    <h1>Ideas, Guides &<br>Industry Insights</h1>
+    <p>Original, research-backed articles from a developer who's shipped real products for real clients. No filler, no fluff.</p>
+  </div>
+</div>
+
+<!-- Featured post -->
+<div class="section" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="eyebrow">Featured Article</div>
+    <div class="post-card" onclick="openArticle('mobile-cost')" style="cursor:pointer">
+      <div style="position:relative">
+        <img src="https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=1200&h=400&fit=crop" alt="Mobile app development" class="post-card-img" onerror="this.parentNode.innerHTML='<div class=\'post-card-img-ph\' style=\'background:var(--acc-soft)\'>📱</div>'"/>
+        <div style="position:absolute;top:14px;left:14px"><span class="post-tag">Mobile Development</span><span class="reading-time-badge">⏱ 5 min read</span></div>
+      </div>
+      <div class="post-body" style="padding:28px">
+        <div class="post-title" style="font-size:22px;margin-bottom:12px">How Much Does It Cost to Build a Mobile App in 2026?</div>
+        <div class="post-exc" style="font-size:15px">In 2026, mobile app development costs range from $15,000 for a simple MVP to over $500,000 for a complex AI-powered enterprise platform. If you've Googled this question and gotten a dozen different answers, you're not alone — because the real answer depends on seven specific factors that most guides never explain properly. Here's the complete breakdown.</div>
+        <div class="post-meta" style="margin-top:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--acc2));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;font-family:var(--fd)">AC</div>
+            <div><div style="font-size:13px;font-weight:600;color:var(--txt)">Alex Carter</div><div style="font-size:11px;color:var(--txt3)">June 2, 2026</div></div>
+          </div>
+          <button class="read-btn">Read Full Article →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="wrap">
+    <div class="blog-page-grid">
+      <div>
+        <h3 style="font-family:var(--fd);font-size:18px;font-weight:700;color:var(--txt);margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--border)">Latest Articles</h3>
+
+        <!-- Post 2 -->
+        <div class="post-card" onclick="openArticle('outgrown')" style="cursor:pointer;margin-bottom:22px">
+          <img src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=900&h=300&fit=crop" alt="Business software" class="post-card-img" onerror="this.parentNode.innerHTML='<div class=\'post-card-img-ph\' style=\'background:rgba(245,83,83,.08)\'>⚙️</div>'"/>
+          <div class="post-body">
+            <div style="margin-bottom:8px"><span class="post-tag" style="background:rgba(245,83,83,.12);color:var(--red);border-color:rgba(245,83,83,.25)">Software Strategy</span><span class="reading-time-badge">⏱ 7 min read</span></div>
+            <div class="post-title">5 Signs Your Business Has Outgrown Its Software — And What To Do About It</div>
+            <div class="post-exc">Your team has doubled. Orders have tripled. But your software is the same system you set up three years ago on a free plan. Sound familiar? Here are the five unmistakable signs it's time to rebuild — and a practical roadmap for doing it without disrupting operations.</div>
+            <div class="post-meta" style="margin-top:14px;justify-content:space-between;display:flex;align-items:center;flex-wrap:wrap;gap:10px">
+              <div><span>Alex Carter</span><span class="dot"></span><span>May 18, 2026</span></div>
+              <button class="read-btn">Read Article →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Post 3 -->
+        <div class="post-card" onclick="openArticle('tech-stack')" style="cursor:pointer;margin-bottom:22px">
+          <img src="https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=900&h=300&fit=crop" alt="Tech stack code" class="post-card-img" onerror="this.parentNode.innerHTML='<div class=\'post-card-img-ph\' style=\'background:rgba(155,109,255,.08)\'>🤖</div>'"/>
+          <div class="post-body">
+            <div style="margin-bottom:8px"><span class="post-tag" style="background:rgba(155,109,255,.12);color:var(--purple);border-color:rgba(155,109,255,.25)">Tech Stack</span><span class="reading-time-badge">⏱ 6 min read</span></div>
+            <div class="post-title">How To Choose The Right Tech Stack For Your Web App in 2026</div>
+            <div class="post-exc">The wrong tech stack decision is one of the most expensive mistakes a startup can make — and it rarely shows up immediately. You feel it six months later when scaling becomes a nightmare. In 2026, the best stack for most web apps is React or Next.js on the front end, Node.js or Python on the back end, and PostgreSQL as the database. But the real answer is more nuanced than that.</div>
+            <div class="post-meta" style="margin-top:14px;justify-content:space-between;display:flex;align-items:center;flex-wrap:wrap;gap:10px">
+              <div><span>Alex Carter</span><span class="dot"></span><span>May 5, 2026</span></div>
+              <button class="read-btn">Read Article →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Post 4 -->
+        <div class="post-card" onclick="openArticle('woo-vs-shopify')" style="cursor:pointer;margin-bottom:22px">
+          <img src="https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=900&h=300&fit=crop" alt="E-commerce platform" class="post-card-img" onerror="this.parentNode.innerHTML='<div class=\'post-card-img-ph\' style=\'background:rgba(34,211,160,.07)\'>🛒</div>'"/>
+          <div class="post-body">
+            <div style="margin-bottom:8px"><span class="post-tag" style="background:rgba(34,211,160,.12);color:var(--green);border-color:rgba(34,211,160,.25)">E-Commerce</span><span class="reading-time-badge">⏱ 8 min read</span></div>
+            <div class="post-title">WooCommerce vs Shopify in 2026: Which Platform Should You Actually Build On?</div>
+            <div class="post-exc">I've built over 20 e-commerce stores across both platforms. Here's my unbiased take: Shopify wins on simplicity and speed-to-market. WooCommerce wins on long-term ownership and flexibility. But neither answer is right for every business — and choosing the wrong one is an expensive mistake. Here's the full breakdown with real cost figures.</div>
+            <div class="post-meta" style="margin-top:14px;justify-content:space-between;display:flex;align-items:center;flex-wrap:wrap;gap:10px">
+              <div><span>Alex Carter</span><span class="dot"></span><span>April 22, 2026</span></div>
+              <button class="read-btn">Read Article →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:32px;padding-top:28px;border-top:1px solid var(--border)">
+          <button style="width:38px;height:38px;border-radius:9px;border:1px solid var(--border2);background:var(--card2);color:var(--txt2);cursor:pointer;font-size:14px;transition:all .2s" onmouseover="this.style.background='var(--acc)';this.style.color='#fff'" onmouseout="this.style.background='var(--card2)';this.style.color='var(--txt2)'">‹</button>
+          <button style="width:38px;height:38px;border-radius:9px;border:none;background:var(--acc);color:#fff;cursor:pointer;font-size:14px;font-weight:700">1</button>
+          <button style="width:38px;height:38px;border-radius:9px;border:1px solid var(--border2);background:var(--card2);color:var(--txt2);cursor:pointer;font-size:14px;transition:all .2s" onmouseover="this.style.background='var(--acc)';this.style.color='#fff'" onmouseout="this.style.background='var(--card2)';this.style.color='var(--txt2)'">2</button>
+          <button style="width:38px;height:38px;border-radius:9px;border:1px solid var(--border2);background:var(--card2);color:var(--txt2);cursor:pointer;font-size:14px;transition:all .2s" onmouseover="this.style.background='var(--acc)';this.style.color='#fff'" onmouseout="this.style.background='var(--card2)';this.style.color='var(--txt2)'">›</button>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div>
+        <!-- Search -->
+        <div class="sw" style="margin-bottom:18px">
+          <div class="sw-title">Search Articles</div>
+          <div style="display:flex;gap:8px">
+            <input placeholder="Search..." style="flex:1;padding:9px 14px;border-radius:9px;border:1.5px solid var(--border2);background:var(--bg2);color:var(--txt);font-size:13px;outline:none" onfocus="this.style.borderColor='var(--acc)'" onblur="this.style.borderColor='var(--border2)'"/>
+            <button style="padding:9px 14px;border-radius:9px;background:var(--acc);color:#fff;border:none;cursor:pointer;font-size:14px">🔍</button>
+          </div>
+        </div>
+
+        <!-- Author card -->
+        <div class="sw" style="margin-bottom:18px">
+          <div class="sw-title">About the Author</div>
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px">
+            <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--acc2));display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#fff;font-family:var(--fd);flex-shrink:0;border:2px solid var(--border2)">AC</div>
+            <div>
+              <div style="font-family:var(--fd);font-size:15px;font-weight:700;color:var(--txt)">Alex Carter</div>
+              <div style="font-size:12px;color:var(--acc);font-weight:600">Senior Web Developer</div>
+            </div>
+          </div>
+          <p style="font-size:13px;color:var(--txt2);line-height:1.65;margin-bottom:14px">5 years building products for clients in 12 countries. I write about what actually works — not theoretical best practices.</p>
+          <div style="display:flex;gap:7px">
+            <a href="#" style="padding:5px 12px;border-radius:20px;border:1px solid var(--border2);font-size:12px;font-weight:600;color:var(--txt2);transition:all .2s" onmouseover="this.style.color='var(--acc)'" onmouseout="this.style.color='var(--txt2)'">LinkedIn</a>
+            <a href="#" style="padding:5px 12px;border-radius:20px;border:1px solid var(--border2);font-size:12px;font-weight:600;color:var(--txt2);transition:all .2s" onmouseover="this.style.color='var(--acc)'" onmouseout="this.style.color='var(--txt2)'">GitHub</a>
+            <a href="#" style="padding:5px 12px;border-radius:20px;border:1px solid var(--border2);font-size:12px;font-weight:600;color:var(--txt2);transition:all .2s" onmouseover="this.style.color='var(--acc)'" onmouseout="this.style.color='var(--txt2)'">Twitter</a>
+          </div>
+        </div>
+
+        <!-- Recent posts -->
+        <div class="sw" style="margin-bottom:18px">
+          <div class="sw-title">Recent Posts</div>
+          <div class="rp-item" onclick="openArticle('mobile-cost')" style="cursor:pointer"><div class="rp-thumb" style="background:var(--acc-soft)">📱</div><div><div class="rp-title">How Much Does It Cost to Build a Mobile App in 2026?</div><div class="rp-date">June 2, 2026</div></div></div>
+          <div class="rp-item" onclick="openArticle('outgrown')" style="cursor:pointer"><div class="rp-thumb" style="background:rgba(245,83,83,.1)">⚙️</div><div><div class="rp-title">5 Signs Your Business Has Outgrown Its Software</div><div class="rp-date">May 18, 2026</div></div></div>
+          <div class="rp-item" onclick="openArticle('tech-stack')" style="cursor:pointer"><div class="rp-thumb" style="background:rgba(155,109,255,.1)">🤖</div><div><div class="rp-title">How To Choose The Right Tech Stack</div><div class="rp-date">May 5, 2026</div></div></div>
+          <div class="rp-item" onclick="openArticle('woo-vs-shopify')" style="cursor:pointer;border-bottom:none"><div class="rp-thumb" style="background:rgba(34,211,160,.08)">🛒</div><div><div class="rp-title">WooCommerce vs Shopify in 2026</div><div class="rp-date">April 22, 2026</div></div></div>
+        </div>
+
+        <!-- Categories -->
+        <div class="sw" style="margin-bottom:18px">
+          <div class="sw-title">Categories</div>
+          <div class="tag-cloud">
+            <span class="btag">Web Development</span><span class="btag">Mobile Apps</span>
+            <span class="btag">E-Commerce</span><span class="btag">AI & ML</span>
+            <span class="btag">Design</span><span class="btag">DevOps</span>
+            <span class="btag">Fintech</span><span class="btag">Startup</span>
+            <span class="btag">Tech Stack</span><span class="btag">Strategy</span>
+          </div>
+        </div>
+
+        <!-- CTA widget -->
+        <div class="sw" style="background:linear-gradient(155deg,#0e2b52,#0d3872);border-color:var(--acc);padding:24px">
+          <div style="font-size:22px;margin-bottom:10px">🚀</div>
+          <h4 style="font-family:var(--fd);font-size:16px;font-weight:700;color:#fff;margin-bottom:8px">Got a project in mind?</h4>
+          <p style="font-size:13px;color:rgba(255,255,255,.65);margin-bottom:16px;line-height:1.6">Free 30-minute strategy call. No commitment — just an honest conversation about your business.</p>
+          <button class="btn-acc" onclick="showPage('contact')" style="width:100%;justify-content:center;font-size:13px">Book Free Call ↗</button>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="sw" style="margin-top:18px">
+          <div class="sw-title">Newsletter</div>
+          <p style="font-size:13px;color:var(--txt2);margin-bottom:14px;line-height:1.6">One practical article per month. No spam, no promotions — just useful insights.</p>
+          <input placeholder="your@email.com" style="width:100%;padding:10px 14px;border-radius:9px;border:1.5px solid var(--border2);background:var(--bg2);color:var(--txt);font-size:13px;outline:none;margin-bottom:8px" onfocus="this.style.borderColor='var(--acc)'" onblur="this.style.borderColor='var(--border2)'"/>
+          <button style="width:100%;padding:10px;border-radius:9px;background:var(--card2);color:var(--txt);border:1px solid var(--border2);font-weight:600;font-size:13px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='var(--acc)';this.style.color='#fff'" onmouseout="this.style.background='var(--card2)';this.style.color='var(--txt)'">Subscribe →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="marquee-wrap"><div class="marquee-track" id="m4"></div></div>
+</div><!-- /blog-index -->
+
+<!-- ═══════════ ARTICLE PAGES ═══════════ -->
+<div id="blog-article" style="display:none">
+<div id="article-content"></div>
+</div>
+</div><!-- /page-blog -->
+
+<!-- ── ABOUT ── -->
+<div class="page" id="page-about">
+<div class="page-hero-dark">
+  <div class="wrap">
+    <div class="eyebrow">About Me</div>
+    <h1>Building the future,<br>one product at a time</h1>
+    <p>I turn ambitious ideas into polished, scalable products that businesses actually rely on.</p>
+  </div>
+</div>
+<div class="section">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-img">👨‍💻</div>
+      <div>
+        <div class="eyebrow">My Story</div>
+        <h2 class="section-h2">5 years. 48 projects.<br>12 countries.</h2>
+        <p style="font-size:15px;color:var(--txt2);line-height:1.8;margin-bottom:18px">I started DevPortfolio in 2021 with a single goal: build software that actually makes a difference. Since then, I've worked with startups, SMEs, and enterprise clients across Africa, Europe, and the Americas.</p>
+        <p style="font-size:15px;color:var(--txt2);line-height:1.8;margin-bottom:28px">Great software isn't just clean code — it's understanding the problem deeply, communicating clearly, and delivering on time, every time.</p>
+        <div class="skill-bars">
+          <div class="sb-item"><div class="sb-labels"><span>React & Next.js</span><span>96%</span></div><div class="sb-track"><div class="sb-fill" style="width:96%"></div></div></div>
+          <div class="sb-item"><div class="sb-labels"><span>Node.js & APIs</span><span>93%</span></div><div class="sb-track"><div class="sb-fill" style="width:93%"></div></div></div>
+          <div class="sb-item"><div class="sb-labels"><span>UI/UX Design</span><span>88%</span></div><div class="sb-track"><div class="sb-fill" style="width:88%"></div></div></div>
+          <div class="sb-item"><div class="sb-labels"><span>Mobile (React Native)</span><span>84%</span></div><div class="sb-track"><div class="sb-fill" style="width:84%"></div></div></div>
+          <div class="sb-item"><div class="sb-labels"><span>DevOps & Cloud</span><span>79%</span></div><div class="sb-track"><div class="sb-fill" style="width:79%"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section alt">
+  <div class="wrap">
+    <div class="sh center"><div class="eyebrow">Our Values</div><h2 class="section-h2">What drives every decision</h2></div>
+    <div class="values-grid">
+      <div class="val-card"><div class="val-icon">🎯</div><div class="val-title">Outcome-First Thinking</div><p class="val-desc">Every decision is made with your business goal in mind, not just technical elegance.</p></div>
+      <div class="val-card"><div class="val-icon">🔍</div><div class="val-title">Radical Transparency</div><p class="val-desc">No black boxes. You see timelines, costs, trade-offs, and progress. No surprises.</p></div>
+      <div class="val-card"><div class="val-icon">🚀</div><div class="val-title">Speed Without Shortcuts</div><p class="val-desc">Fast delivery doesn't mean sloppy code. Organized, focused, disciplined about what matters.</p></div>
+      <div class="val-card"><div class="val-icon">🌍</div><div class="val-title">Global Perspective</div><p class="val-desc">12 countries of experience brings cultural awareness and diverse problem-solving to every project.</p></div>
+      <div class="val-card"><div class="val-icon">🤝</div><div class="val-title">Long-Term Partnership</div><p class="val-desc">I don't disappear after launch. I stay engaged and celebrate wins with clients long after delivery.</p></div>
+      <div class="val-card"><div class="val-icon">📐</div><div class="val-title">Craft & Quality</div><p class="val-desc">Details matter. Whether it's a hover state or a DB index, I get every layer right.</p></div>
+    </div>
+  </div>
+</div>
+<div class="section">
+  <div class="wrap">
+    <div class="sh center"><div class="eyebrow">The Team</div><h2 class="section-h2">The people behind the work</h2></div>
+    <div class="team-grid">
+      <div class="team-card"><div class="team-av" style="background:linear-gradient(135deg,var(--acc),var(--acc2))">AC</div><div class="team-name">Alex Carter</div><div class="team-role">Founder & Lead Developer</div></div>
+      <div class="team-card"><div class="team-av" style="background:linear-gradient(135deg,var(--purple),#6d28d9)">JK</div><div class="team-name">James Kimani</div><div class="team-role">Backend Engineer</div></div>
+      <div class="team-card"><div class="team-av" style="background:linear-gradient(135deg,var(--green),#047857);color:#000">SM</div><div class="team-name">Sarah Mwangi</div><div class="team-role">UI/UX Designer</div></div>
+      <div class="team-card"><div class="team-av" style="background:linear-gradient(135deg,var(--amber),#d97706);color:#000">LN</div><div class="team-name">Linda Ngugi</div><div class="team-role">Project Manager</div></div>
+    </div>
+  </div>
+</div>
+<div class="marquee-wrap"><div class="marquee-track" id="m5"></div></div>
+</div>
+
+<!-- ── CAREERS ── -->
+<div class="page" id="page-careers">
+<div class="page-hero-dark">
+  <div class="wrap">
+    <div class="careers-hero-grid">
+      <div>
+        <div class="eyebrow">Careers</div>
+        <h1 style="font-size:clamp(38px,6vw,64px);font-weight:800;color:var(--txt);margin-bottom:14px;line-height:1.05;position:relative;z-index:1">Join Our<br>Growing Team</h1>
+        <p style="font-size:17px;color:var(--txt2);margin-bottom:28px;position:relative;z-index:1">Empowering talented minds to shape the future of technology</p>
+        <button class="btn-acc" onclick="showPage('contact')" style="position:relative;z-index:1">Send Your CV ↗</button>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border2);border-radius:20px;padding:28px;position:relative;z-index:1">
+        <div style="font-size:13px;font-weight:600;color:var(--txt3);margin-bottom:14px">Why join DevPortfolio?</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--txt2)"><span style="color:var(--green)">✓</span>Remote-first culture</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--txt2)"><span style="color:var(--green)">✓</span>Work with global clients</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--txt2)"><span style="color:var(--green)">✓</span>Competitive pay + equity</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--txt2)"><span style="color:var(--green)">✓</span>Learning budget & conferences</div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:var(--txt2)"><span style="color:var(--green)">✓</span>Collaborative, no-ego team</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section">
+  <div class="wrap">
+    <h2 class="section-h2" style="text-align:center;margin-bottom:36px">Open Positions</h2>
+    <div class="no-jobs">
+      <div class="no-jobs-icon">💼</div>
+      <div class="no-jobs-title">We currently have no open positions</div>
+      <p class="no-jobs-sub">We're always interested in meeting talented people. Send your CV and we'll reach out for future roles.</p>
+      <button class="btn-acc" onclick="showPage('contact')">Send Your CV ↗</button>
+    </div>
+  </div>
+</div>
+<div class="section alt">
+  <div class="wrap">
+    <div class="sh center"><div class="eyebrow">Perks & Benefits</div><h2 class="section-h2">What you get when you join</h2></div>
+    <div class="perks-grid">
+      <div class="perk-card"><div class="perk-icon">🌍</div><div class="perk-title">Remote First</div><p class="perk-desc">Work from anywhere. We've always been remote and we do it well.</p></div>
+      <div class="perk-card"><div class="perk-icon">📚</div><div class="perk-title">Learning Budget</div><p class="perk-desc">$1,000/year for courses, books, conferences, and tools.</p></div>
+      <div class="perk-card"><div class="perk-icon">⏰</div><div class="perk-title">Flexible Hours</div><p class="perk-desc">We care about output, not when you clock in. Work when you're best.</p></div>
+      <div class="perk-card"><div class="perk-icon">💰</div><div class="perk-title">Competitive Pay</div><p class="perk-desc">Market-rate salaries with performance bonuses and transparent pay bands.</p></div>
+      <div class="perk-card"><div class="perk-icon">🤝</div><div class="perk-title">No-Ego Culture</div><p class="perk-desc">Ideas win on merit. Everyone has a voice, regardless of seniority.</p></div>
+      <div class="perk-card"><div class="perk-icon">🚀</div><div class="perk-title">Real Impact</div><p class="perk-desc">Real products, real clients. No busywork, no synthetic projects.</p></div>
+    </div>
+  </div>
+</div>
+<div class="marquee-wrap"><div class="marquee-track" id="m6"></div></div>
+</div>
+
+<!-- ── CONTACT ── -->
+<div class="page" id="page-contact">
+<div class="page-hero-dark">
+  <div class="wrap">
+    <div class="eyebrow">Contact</div>
+    <h1>Let's build something<br>great together</h1>
+    <p>Tell me about your project and I'll get back within 24 hours. First call always free.</p>
+  </div>
+</div>
+<div class="section">
+  <div class="wrap">
+    <div class="ct-grid">
+      <div>
+        <div class="ci-item"><div class="ci-icon">✉️</div><div><div class="ci-lbl">Email</div><a href="mailto:alex@devportfolio.com" class="ci-val link">alex@devportfolio.com</a></div></div>
+        <div class="ci-item"><div class="ci-icon">📞</div><div><div class="ci-lbl">Phone / WhatsApp</div><div class="ci-val">+1 (555) 012-3456</div></div></div>
+        <div class="ci-item"><div class="ci-icon">📍</div><div><div class="ci-lbl">Location</div><div class="ci-val">Remote — Worldwide</div></div></div>
+        <div class="ci-item" style="margin-bottom:28px"><div class="ci-icon">⏰</div><div><div class="ci-lbl">Response time</div><div class="ci-val">Within 24 hours</div></div></div>
+        <div style="background:var(--card);border:1px solid var(--border2);border-radius:18px;padding:24px;margin-bottom:20px">
+          <h4 style="font-family:var(--fd);font-size:17px;font-weight:700;color:var(--txt);margin-bottom:8px">Schedule a free call</h4>
+          <p style="font-size:13px;color:var(--txt2);margin-bottom:16px;line-height:1.6">No jargon. No pressure. Just an honest conversation.</p>
+          <button class="btn-acc" style="font-size:13px;padding:9px 18px">Book 30-min Call ↗</button>
+        </div>
+        <div style="background:var(--card2);border:1px solid var(--border);border-radius:16px;padding:20px">
+          <div style="font-size:12px;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">Find me online</div>
+          <div style="display:flex;gap:8px">
+            <a href="#" class="fsoc-btn">in</a><a href="#" class="fsoc-btn">GH</a>
+            <a href="#" class="fsoc-btn">𝕏</a><a href="mailto:alex@devportfolio.com" class="fsoc-btn">✉</a>
+          </div>
+        </div>
+      </div>
+      <div class="form-card" id="cpForm"></div>
+    </div>
+  </div>
+</div>
+<div class="marquee-wrap"><div class="marquee-track" id="m7"></div></div>
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+<div class="wrap">
+  <div class="foot-grid">
+    <div>
+      <div class="logo" onclick="showPage('home')">
+        <div class="logo-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        DevPortfolio
+      </div>
+      <p class="foot-desc">Building fast, beautiful websites and web apps for businesses across 12 countries. Let's create something remarkable together.</p>
+      <div class="foot-soc">
+        <a href="#" class="fsoc-btn">in</a><a href="#" class="fsoc-btn">GH</a>
+        <a href="#" class="fsoc-btn">𝕏</a><a href="mailto:alex@devportfolio.com" class="fsoc-btn">✉</a>
+      </div>
+    </div>
+    <div>
+      <div class="foot-col-title">Company</div>
+      <ul class="foot-links">
+        <li><a onclick="showPage('about')">About Us</a></li>
+        <li><a onclick="showPage('blog')">News & Insights</a></li>
+        <li><a onclick="showPage('casestudies')">Case Studies</a></li>
+        <li><a onclick="showPage('careers')">Careers</a></li>
+        <li><a onclick="showPage('contact')">Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="foot-col-title">Services</div>
+      <ul class="foot-links">
+        <li><a onclick="showPage('solutions')">Web App Development</a></li>
+        <li><a onclick="showPage('solutions')">E-Commerce</a></li>
+        <li><a onclick="showPage('solutions')">Mobile Apps</a></li>
+        <li><a onclick="showPage('solutions')">AI Automation</a></li>
+        <li><a onclick="showPage('solutions')">Cloud & DevOps</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="foot-col-title">Industries</div>
+      <ul class="foot-links">
+        <li><a onclick="showIndustry('fintech')">Fintech & Banking</a></li>
+        <li><a onclick="showIndustry('travel')">Travel & Hospitality</a></li>
+        <li><a onclick="showIndustry('media')">Media & Entertainment</a></li>
+        <li><a onclick="showIndustry('logistics')">Logistics & Transport</a></li>
+        <li><a onclick="showIndustry('ecommerce')">E-Commerce & Retail</a></li>
+        <li><a onclick="showIndustry('education')">Education & E-Learning</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div class="foot-copy">Copyright © 2026 <strong style="color:var(--txt2)">DevPortfolio</strong> | All Rights Reserved.</div>
+    <div class="foot-legal"><a>Privacy Policy</a><a>Terms of Service</a><a>Cookie Policy</a></div>
+    <button class="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+  </div>
+</div>
+</footer>
+
+<script>
+// ══ DATA ══
+const TESTI=[
+  {av:'SM',c:'#2d8ef5',n:'Sarah Mitchell',r:'Founder · ShopEase',co:'🇺🇸 USA',p:'E-Commerce',
+   t:"Alex completely transformed our online presence. The store went live in under 3 weeks and sales tripled in the first month. The attention to detail felt premium. This wasn't just a website — it was a growth engine."},
+  {av:'JO',c:'#9b6dff',n:'James Okonkwo',r:'CTO · AnalytIQ',co:'🇬🇧 UK',p:'SaaS Dashboard',
+   t:"We hired Alex to build our SaaS dashboard from scratch. The code quality was exceptional — clean, well-documented, and easy for our team to maintain. He flagged scaling issues before they became problems."},
+  {av:'AN',c:'#22d3a0',n:'Amara Ndiaye',r:'CEO · Nesto Real Estate',co:'🇳🇬 Nigeria',p:'Real Estate',
+   t:"I came with a rough idea and Alex turned it into a platform our agents actually love. Communication was excellent throughout — weekly calls, shared Notion board, fast responses. Professional from start to finish."},
+  {av:'PS',c:'#f5a623',n:'Priya Sharma',r:'Marketing Director · LaunchPad',co:'🇮🇳 India',p:'Landing Page',
+   t:"Our conversion rate jumped from 2.1% to 8.4% after Alex's redesign. He didn't just make it prettier — he researched our industry, suggested better structure, and implemented A/B testing. That thinking sets him apart."},
+  {av:'LK',c:'#22c7d4',n:'Linda Kamau',r:'Director · FitTrack Kenya',co:'🇰🇪 Kenya',p:'Web App',
+   t:"Working with Alex was the smoothest developer experience I've had in 10 years. He met every deadline, explained decisions in plain English, and was genuinely invested in the product succeeding."},
+];
+
+const PLANS=[
+  {n:'Starter',i:'⚡',tag:'For small businesses & personal brands',m:799,a:649,st:'light',cta:'Get Started',pop:false,
+   feats:[{t:'Up to 5 pages',y:1},{t:'Mobile-responsive design',y:1},{t:'Contact form integration',y:1},{t:'Basic SEO setup',y:1},{t:'Google Analytics setup',y:1},{t:'1 revision round',y:1},{t:'2 weeks delivery',y:1},{t:'CMS / blog system',y:0},{t:'Custom app features',y:0},{t:'E-commerce',y:0},{t:'Priority support',y:0}]},
+  {n:'Professional',i:'⭐',tag:'For growing businesses that need power',m:1999,a:1649,st:'feat',cta:'Most Popular — Start Now',pop:true,
+   feats:[{t:'Up to 15 pages',y:1},{t:'Mobile-responsive design',y:1},{t:'CRM integration',y:1},{t:'Advanced SEO + schema',y:1},{t:'Google Analytics 4',y:1},{t:'3 revision rounds',y:1},{t:'3–4 weeks delivery',y:1},{t:'CMS / blog system',y:1},{t:'Custom features',y:1},{t:'E-commerce',y:0},{t:'Priority support',y:1}]},
+  {n:'Enterprise',i:'🏢',tag:'Full-scale apps & e-commerce platforms',m:4999,a:3999,st:'ent',cta:"Let's Build Big",pop:false,
+   feats:[{t:'Unlimited pages',y:1},{t:'Mobile-responsive design',y:1},{t:'Full backend / API',y:1},{t:'Advanced SEO + audit',y:1},{t:'Full analytics suite',y:1},{t:'Unlimited revisions',y:1},{t:'4–8 weeks delivery',y:1},{t:'CMS / blog system',y:1},{t:'Custom web app features',y:1},{t:'E-commerce (Stripe/M-Pesa)',y:1},{t:'Dedicated priority support',y:1}]},
+];
+
+const ADDONS=[
+  {n:'Monthly Maintenance',p:'$199/mo',d:'Updates, security, backups, uptime monitoring'},
+  {n:'SEO Growth Package',p:'$349/mo',d:'Blog content, backlinks, rank tracking'},
+  {n:'Extra Revision Round',p:'$149',d:'One additional revision round'},
+  {n:'Speed Optimisation',p:'$299',d:'95+ Lighthouse score guaranteed'},
+  {n:'Logo & Brand Kit',p:'$399',d:'Logo, colours, typography, brand guidelines'},
+  {n:'Copywriting',p:'$99/page',d:'Professional SEO-optimised copy'},
+];
+
+const IND={
+  fintech:{n:'Fintech & Banking',s:'Secure, compliant, highly scalable financial technology platforms that move money safely and smartly.',f:[
+    {t:'Payment Gateway Integration',d:'Stripe, M-Pesa, PayPal, and custom payment rail integrations with real-time reconciliation and fraud detection.'},
+    {t:'Banking Dashboard & Portals',d:'Customer-facing and admin banking portals with transaction history, KYC flows, and real-time balance updates.'},
+    {t:'Lending & Credit Platforms',d:'End-to-end loan origination, scoring, disbursement, and repayment tracking with automated underwriting.'},
+    {t:'Blockchain & DeFi Solutions',d:'Smart contracts, token systems, and DeFi platforms on Ethereum, Polygon, and Solana.'},
+    {t:'Regulatory Compliance Tools',d:'AML/KYC automation, audit trails, reporting dashboards built to the latest regulatory standards.'},
+    {t:'Financial Analytics Dashboards',d:'Real-time financial data visualization with charts, forecasts, and insights for CFOs and investment teams.'}]},
+  healthcare:{n:'Healthcare',s:'HIPAA-compliant digital health platforms that improve patient outcomes and streamline clinical operations.',f:[
+    {t:'Patient Management Systems',d:'End-to-end records with appointment scheduling, medical history, prescriptions, and lab result tracking.'},
+    {t:'Telemedicine Platforms',d:'Secure video consultation with real-time messaging, digital prescriptions, and patient follow-up workflows.'},
+    {t:'Health Analytics Dashboards',d:'Population health dashboards with outcome tracking, predictive risk scoring, and clinical performance metrics.'},
+    {t:'EHR / EMR Integrations',d:'Custom integrations with Epic, Cerner, and local health information exchanges.'},
+    {t:'Medical Billing & Claims',d:'Automated insurance claims processing, billing reconciliation, and revenue cycle management.'},
+    {t:'Wearable & IoT Data Platforms',d:'Platforms that ingest and analyze data from wearables, glucose monitors, and medical IoT devices in real time.'}]},
+  logistics:{n:'Logistics & Transportation',s:'Digital infrastructure that makes supply chains smarter, faster, and more transparent from warehouse to last mile.',f:[
+    {t:'Fleet Tracking & Management',d:'Real-time GPS fleet tracking with driver behavior scoring, fuel analytics, maintenance scheduling, and geofencing.'},
+    {t:'Route Optimization & AI Planning',d:'AI-powered route planning accounting for traffic, time windows, vehicle capacity, and driver hours.'},
+    {t:'Real-Time Shipment Tracking',d:'Customer-facing tracking portals with live status, exception alerts, and proof of delivery across all carriers.'},
+    {t:'Automated Dispatching Systems',d:'Intelligent dispatch platforms assigning jobs based on driver location, load capacity, and priority.'},
+    {t:'Driver Management & Mobile Apps',d:'Driver apps with job assignment, navigation integration, proof of delivery capture, and 2-way dispatch comms.'},
+    {t:'IoT & Sensor Integration',d:'Connected platforms aggregating data from temperature sensors, GPS trackers, and weight scales across your fleet.'}]},
+  ecommerce:{n:'E-Commerce & Retail',s:'High-converting online stores and retail platforms that scale from your first sale to your millionth.',f:[
+    {t:'Custom Online Store Development',d:'Tailored e-commerce platforms with product management, cart, checkout, Stripe/M-Pesa, and order tracking.'},
+    {t:'Headless Commerce Architecture',d:'Decoupled storefront with a headless CMS backend for maximum flexibility and performance.'},
+    {t:'Inventory Management Systems',d:'Real-time inventory tracking, low-stock alerts, multi-warehouse management, and reorder workflows.'},
+    {t:'Marketplace Development',d:'Multi-vendor platforms with seller onboarding, commission management, dispute resolution, and analytics.'},
+    {t:'Loyalty & Rewards Programs',d:'Points systems, tiered membership, referral tracking, and personalized discount engines.'},
+    {t:'Analytics & Conversion Optimization',d:'Sales dashboards, customer journey analytics, A/B testing, and funnel optimization.'}]},
+  realestate:{n:'Real Estate & Property',s:'Cloud-based property platforms that simplify listings, transactions, and tenant management at scale.',f:[
+    {t:'Property Listing Platforms',d:'Listing portals with advanced search, map integration, virtual tours, mortgage calculators, and saved searches.'},
+    {t:'Tenant & Lease Management',d:'End-to-end tenant management with lease tracking, rent collection, maintenance, and renewal reminders.'},
+    {t:'CRM for Agents & Brokers',d:'Purpose-built CRM with lead scoring, pipeline tracking, automated follow-ups, and commission management.'},
+    {t:'Investment Analytics Dashboards',d:'Property investment tracking with cash flow projections, ROI calculators, and portfolio performance.'},
+    {t:'Virtual Tour Integration',d:'360° virtual tour embedding and immersive property viewing experiences that reduce time to close.'},
+    {t:'Document & Contract Management',d:'Secure digital contract signing, document storage, compliance tracking, and automated notifications.'}]},
+  travel:{n:'Travel & Hospitality',s:'Booking platforms and operational tools that delight travelers and maximize revenue per available room.',f:[
+    {t:'Hotel & Resort Booking Systems',d:'Full-stack reservation systems with real-time availability, dynamic pricing, and OTA channel management.'},
+    {t:'Tour & Activity Booking Platforms',d:'Booking engines for tour operators with scheduling, capacity management, and customer communication.'},
+    {t:'Mobile Travel Companion Apps',d:'React Native apps with offline maps, itinerary management, local recommendations, and emergency contacts.'},
+    {t:'Payment & Currency Integration',d:'Multi-currency processing with M-Pesa, Stripe, Flutterwave, and regional payment rails.'},
+    {t:'Revenue Management Tools',d:'Dynamic pricing engines, occupancy forecasting, competitor rate tracking, and automated yield management.'},
+    {t:'Loyalty & Membership Systems',d:'Points accumulation, tier-based rewards, partner integrations, and personalized offers to drive direct bookings.'}]},
+  media:{n:'Media & Entertainment',s:'Scalable content platforms, streaming infrastructure, and audience engagement tools for modern media companies.',f:[
+    {t:'Content Management Systems',d:'Custom CMS for publishing, video, podcasting, and live events with editorial workflows and monetization.'},
+    {t:'Video Streaming Platforms',d:'HLS-based streaming with adaptive bitrate, DRM protection, live and VOD support, and analytics.'},
+    {t:'Subscription & Paywall Systems',d:'Metered paywall, hard paywall, and freemium models with Stripe subscriptions and churn analytics.'},
+    {t:'Audience Analytics Platforms',d:'Real-time analytics with engagement scoring, content performance, and editorial recommendation engines.'},
+    {t:'Creator & Contributor Portals',d:'Freelancer portals with brief management, submission tracking, editorial review, and automated payments.'},
+    {t:'Ad Operations & Monetization',d:'Header bidding, ad server integration, programmatic revenue optimization, and first-party data collection.'}]},
+  education:{n:'Education & E-Learning',s:'Learning platforms and ed-tech tools that make quality education accessible, engaging, and measurable.',f:[
+    {t:'Learning Management Systems',d:'Full LMS with course creation, video hosting, quizzes, certificates, progress tracking, and student analytics.'},
+    {t:'Live Virtual Classrooms',d:'Real-time virtual classes with video, whiteboards, breakout rooms, recording, and attendance tracking.'},
+    {t:'Student Information Systems',d:'Comprehensive SIS with enrollment management, grades, attendance, scheduling, and parent portals.'},
+    {t:'Adaptive Learning Engines',d:'AI-powered content personalization adapting learning paths based on performance, pace, and style.'},
+    {t:'Assessment & Proctoring Tools',d:'Online exam platforms with randomized questions, time limits, plagiarism detection, and AI proctoring.'},
+    {t:'Education Marketplace Platforms',d:'Multi-instructor marketplace where educators can create, publish, and sell courses with built-in payments.'}]},
+};
+
+// ══ NAV ══
+window.addEventListener('scroll',()=>{document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>20)});
+let mobOpen=false;
+function togMob(){mobOpen=!mobOpen;document.getElementById('mobMenu').classList.toggle('open',mobOpen)}
+function closeMob(){mobOpen=false;document.getElementById('mobMenu').classList.remove('open')}
+
+// ══ PAGES ══
+function showPage(p,e){
+  if(e)e.preventDefault();
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  setNavActive(p);
+  if(p==='home'){renderPlans();renderTestis();buildForm('hForm')}
+  if(p==='contact'){buildForm('cpForm')}
+}
+
+function showIndustry(k){
+  const d=IND[k];if(!d)return;
+  document.getElementById('iEye').textContent='Industry Solutions';
+  document.getElementById('iTitle').textContent=d.n;
+  document.getElementById('iSub').textContent=d.s;
+  document.getElementById('iFEye').textContent='What We Build for '+d.n;
+  document.getElementById('iFTitle').textContent='Specialized Solutions';
+  document.getElementById('iInline').textContent=d.n.toLowerCase();
+  document.getElementById('iFGrid').innerHTML=d.f.map(f=>`
+    <div class="ind-feat">
+      <div class="ind-feat-title">${f.t}</div>
+      <p class="ind-feat-desc">${f.d}</p>
+    </div>`).join('');
+  showPage('industry');
+}
+
+function setNavActive(p){
+  document.querySelectorAll('.nav-links a,.nav-links button').forEach(e=>e.classList.remove('anav'));
+  const m={home:'nh',solutions:'ns',about:'nc',careers:'nc',casestudies:'nc',blog:'nr',contact:null,industry:'ns'};
+  if(m[p])document.getElementById(m[p])?.classList.add('anav');
+}
+
+function setInd(el,k){
+  document.querySelectorAll('.ind-tag').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');showIndustry(k);
+}
+
+// ══ MARQUEE ══
+const MI=Array(10).fill(0).map(()=>`<span class="marquee-item">Contact ↗ <span>✦</span></span>`).join('');
+['m1','m2','m3','m4','m5','m6','m7'].forEach(id=>{const e=document.getElementById(id);if(e)e.innerHTML=MI+MI});
+
+// ══ TESTIMONIALS ══
+let ti=0;
+function renderTestis(){
+  const t=TESTI[ti];
+  document.getElementById('testiBody').innerHTML=`
+    <div style="flex-shrink:0">
+      <div class="testi-av" style="background:linear-gradient(135deg,${t.c},${t.c}99);box-shadow:0 4px 20px ${t.c}50">${t.av}</div>
+      <div style="display:flex;gap:2px;justify-content:center;margin-top:7px">${'⭐'.repeat(5)}</div>
+      <div style="font-size:11px;color:var(--txt3);text-align:center;margin-top:4px">${t.co}</div>
+    </div>
+    <div style="flex:1">
+      <div style="font-size:11px;font-weight:700;color:${t.c};text-transform:uppercase;letter-spacing:.07em;background:${t.c}18;display:inline-block;padding:3px 10px;border-radius:7px;margin-bottom:12px;border:1px solid ${t.c}30">${t.p}</div>
+      <p class="testi-quote">"${t.t}"</p>
+      <div class="testi-name">${t.n}</div>
+      <div class="testi-role">${t.r}</div>
+    </div>`;
+  document.getElementById('avRow').innerHTML=TESTI.map((tt,i)=>`
+    <button class="av-dot${i===ti?' active':''}" onclick="goT(${i})"
+      style="width:${i===ti?50:42}px;height:${i===ti?50:42}px;background:linear-gradient(135deg,${tt.c},${tt.c}99);border-color:${i===ti?tt.c:'transparent'};box-shadow:${i===ti?'0 0 0 3px '+tt.c+'40':'none'}">${tt.av}</button>`).join('');
+  const wrap=document.getElementById('testiFeat');
+  let ctrl=wrap.querySelector('.tc-wrap');
+  const html=`<div class="tc-wrap">
+    <span style="font-size:13px;color:var(--txt3);font-weight:500">${ti+1}/${TESTI.length}</span>
+    <button class="tc-btn" onclick="goT(${(ti-1+TESTI.length)%TESTI.length})">‹</button>
+    <button class="tc-btn" onclick="goT(${(ti+1)%TESTI.length})">›</button>
+  </div>`;
+  if(!ctrl){wrap.insertAdjacentHTML('beforeend',html)}else{ctrl.outerHTML=html;ctrl=wrap.querySelector('.tc-wrap')}
+}
+function goT(i){ti=i;renderTestis()}
+
+// ══ PRICING ══
+let isAnn=false;
+function togBill(){
+  isAnn=!isAnn;
+  document.getElementById('ptt').style.background=isAnn?'var(--acc)':'var(--border2)';
+  document.getElementById('pth').style.left=isAnn?'25px':'3px';
+  document.getElementById('ml').style.color=isAnn?'var(--txt3)':'var(--acc)';
+  document.getElementById('al').style.color=isAnn?'var(--acc)':'var(--txt3)';
+  document.getElementById('sp').style.display=isAnn?'inline-block':'none';
+  renderPlans();
+}
+function renderPlans(){
+  document.getElementById('plansRow').innerHTML=PLANS.map(p=>{
+    const iF=p.st==='feat';const price=isAnn?p.a:p.m;
+    return `<div class="pcard ${p.st}">
+      ${p.pop?'<div class="pop-badge">⭐ Most Popular</div>':''}
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <div style="width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;background:${iF?'rgba(255,255,255,.12)':'var(--acc-soft)'}"><span>${p.i}</span></div>
+        <div>
+          <div class="pcard-name" style="color:${iF?'#fff':'var(--txt)'}">${p.n}</div>
+          <div class="pcard-tag" style="color:${iF?'rgba(255,255,255,.6)':'var(--txt3)'}">${p.tag}</div>
+        </div>
+      </div>
+      <div class="pcard-price" style="color:${iF?'#fff':'var(--acc)'}">$${price.toLocaleString()}</div>
+      <div class="pcard-note" style="color:${iF?'rgba(255,255,255,.5)':'var(--txt3)'}">one-time project fee</div>
+      <button class="pcard-btn" style="background:${iF?'rgba(255,255,255,.15)':'var(--acc)'};color:${iF?'#fff':'#fff'};border:${iF?'1.5px solid rgba(255,255,255,.25)':'none'};box-shadow:${iF?'none':'var(--sh-acc)'}"
+        onclick="showPage('contact')">${p.cta} →</button>
+      <ul class="pfeats">${p.feats.map(f=>`
+        <li class="pfeat">
+          <span style="font-size:14px;flex-shrink:0;color:${f.y?(iF?'var(--green)':'var(--green)'):(iF?'rgba(255,255,255,.2)':'var(--border2)')}">${f.y?'✓':'✕'}</span>
+          <span style="font-size:13px;color:${f.y?(iF?'rgba(255,255,255,.85)':'var(--txt2)'):(iF?'rgba(255,255,255,.25)':'var(--txt3)')};text-decoration:${f.y?'none':'line-through'}">${f.t}</span>
+        </li>`).join('')}</ul>
+    </div>`;
+  }).join('');
+  document.getElementById('aoGrid').innerHTML=ADDONS.map(a=>`
+    <div class="ao-card">
+      <div><div class="ao-name">${a.n}</div><div class="ao-desc">${a.d}</div></div>
+      <div class="ao-price">${a.p}</div>
+    </div>`).join('');
+}
+
+// ══ FORM ══
+const ptypes=['New website','Web app','E-commerce','Redesign','Maintenance','Other'];
+const budgets=['$500–$999','$1,000–$2,499','$2,500–$4,999','$5,000–$9,999','$10,000+'];
+let sType='',sBudget='',done=false;
+
+function buildForm(wid){
+  const w=document.getElementById(wid);if(!w)return;
+  if(done){w.innerHTML=`<div style="text-align:center;padding:48px 20px">
+    <div style="width:68px;height:68px;border-radius:50%;background:rgba(34,211,160,.12);border:1px solid rgba(34,211,160,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:32px">✅</div>
+    <h3 style="font-family:var(--fd);font-size:21px;font-weight:700;color:var(--txt);margin-bottom:8px">Message sent!</h3>
+    <p style="font-size:15px;color:var(--txt2);line-height:1.7;margin-bottom:22px">Thanks for reaching out. I'll review your details and respond within 24 hours.</p>
+    <button style="padding:10px 24px;border-radius:10px;border:1.5px solid var(--border2);background:var(--acc-soft);color:var(--acc);font-weight:600;font-size:14px;cursor:pointer" onclick="done=false;['hForm','cpForm'].forEach(id=>buildForm(id))">Send another →</button>
+  </div>`;return;}
+  w.innerHTML=`
+    <h3 style="font-family:var(--fd);font-size:19px;font-weight:700;color:var(--txt);margin-bottom:22px">Tell me about your project</h3>
+    <form onsubmit="subForm(event,'${wid}')" novalidate>
+      <div class="frow">
+        <div class="fg"><label class="fl">Your name *</label><input class="fi" id="${wid}_n" placeholder="Alex Carter"><div class="em" id="${wid}_ne"></div></div>
+        <div class="fg"><label class="fl">Email *</label><input class="fi" type="email" id="${wid}_e" placeholder="you@company.com"><div class="em" id="${wid}_ee"></div></div>
+      </div>
+      <div class="fg"><label class="fl">Company (optional)</label><input class="fi" placeholder="Your company name"></div>
+      <div class="fg"><label class="fl">Project type</label>
+        <div class="chips">${ptypes.map(t=>`<button type="button" class="fchip${sType===t?' active':''}" onclick="sType='${t}';buildForm('${wid}')">${t}</button>`).join('')}</div>
+      </div>
+      <div class="fg"><label class="fl">Budget range</label>
+        <div class="chips">${budgets.map(b=>`<button type="button" class="fchip${sBudget===b?' active':''}" onclick="sBudget='${b}';buildForm('${wid}')">${b}</button>`).join('')}</div>
+      </div>
+      <div class="fg"><label class="fl">Project details *</label><textarea class="fi" id="${wid}_m" rows="5" placeholder="Describe your project, goals, timeline..."></textarea><div class="em" id="${wid}_me"></div></div>
+      <button type="submit" class="sub-btn">Send Message ✈</button>
+      <p class="form-note">🔒 Your info is private and never shared.</p>
+    </form>`;
+}
+
+function subForm(e,wid){
+  e.preventDefault();
+  const n=document.getElementById(wid+'_n')?.value.trim();
+  const em=document.getElementById(wid+'_e')?.value.trim();
+  const mg=document.getElementById(wid+'_m')?.value.trim();
+  let ok=true;
+  if(!n){document.getElementById(wid+'_ne').textContent='Name is required';ok=false;}else{document.getElementById(wid+'_ne').textContent='';}
+  if(!em||!/\S+@\S+\.\S+/.test(em)){document.getElementById(wid+'_ee').textContent='Valid email required';ok=false;}else{document.getElementById(wid+'_ee').textContent='';}
+  if(!mg){document.getElementById(wid+'_me').textContent='Please describe your project';ok=false;}else{document.getElementById(wid+'_me').textContent='';}
+  if(ok){done=true;['hForm','cpForm'].forEach(id=>buildForm(id));}
+}
+
+// ══ ARTICLES ══
+const ARTICLES = {
+  'mobile-cost': {
+    cat:'Mobile Development', catColor:'var(--acc)', catBg:'var(--acc-soft)',
+    date:'June 2, 2026', read:'5 min read',
+    title:'How Much Does It Cost to Build a Mobile App in 2026?',
+    img:'https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=1200&h=500&fit=crop',
+    imgAlt:'Developer coding a mobile app',
+    next:{slug:'outgrown',title:'5 Signs Your Business Has Outgrown Its Software'},
+    prev:null,
+    body:`
+      <p>In 2026, building a mobile app costs anywhere from <strong>$15,000 to over $500,000</strong> — and that wide range isn't a cop-out. It reflects seven genuinely different types of products. If someone quotes you a price without knowing your features, your target platform, and your team, that number is meaningless.</p>
+      <p>After shipping over 700 mobile applications across iOS, Android, and cross-platform frameworks, here's what actually drives the number.</p>
+
+      <h2>The Cost Tiers at a Glance</h2>
+      <div class="stat-boxes">
+        <div class="stat-box"><div class="stat-box-num">$15K–$40K</div><div class="stat-box-lbl">Simple MVP</div></div>
+        <div class="stat-box"><div class="stat-box-num">$40K–$120K</div><div class="stat-box-lbl">Mid-complexity App</div></div>
+        <div class="stat-box"><div class="stat-box-num">$120K–$300K</div><div class="stat-box-lbl">Feature-Rich Platform</div></div>
+        <div class="stat-box"><div class="stat-box-num">$300K+</div><div class="stat-box-lbl">Enterprise / AI-Powered</div></div>
+      </div>
+
+      <table class="cost-table">
+        <tr><th>App Type</th><th>Platform</th><th>Typical Cost Range</th><th>Timeline</th></tr>
+        <tr><td>Simple MVP (basic CRUD)</td><td>Single platform</td><td>$15,000 – $40,000</td><td>2–4 months</td></tr>
+        <tr><td>Mid-complexity (APIs, auth)</td><td>Cross-platform</td><td>$40,000 – $120,000</td><td>4–7 months</td></tr>
+        <tr><td>Feature-rich (maps, payments, real-time)</td><td>iOS + Android</td><td>$80,000 – $200,000</td><td>6–10 months</td></tr>
+        <tr><td>Enterprise / AI-powered platform</td><td>All platforms + web</td><td>$200,000 – $500,000+</td><td>9–18 months</td></tr>
+      </table>
+
+      <h2>The 7 Factors That Drive Your Number</h2>
+
+      <h3>1. App Complexity & Feature Count</h3>
+      <p>Complexity is the single biggest lever. A "simple" app with offline sync, or a "moderate" healthcare app with compliance requirements, can jump a full tier in cost before a line of code is written. Each major feature — a map, a payment gateway, real-time chat, push notifications — adds development, QA, and maintenance hours.</p>
+
+      <div class="callout">
+        <div class="callout-icon">💡</div>
+        <div><div class="callout-title">Pro tip: Start with an MVP</div><div class="callout-text">Build only the core feature your users absolutely need at launch. You'll save 40–60% upfront and get real user feedback to guide what to build next. Every feature you defer is money you don't spend until you know it's actually needed.</div></div>
+      </div>
+
+      <h3>2. Platform Choice: iOS, Android, or Cross-Platform?</h3>
+      <p>Native iOS and Android development means two separate codebases — roughly 1.6–1.8× the cost of a single platform. <strong>React Native and Flutter</strong> have matured enough in 2026 to cover 90%+ of use cases at 30–40% lower cost than native, with near-native performance.</p>
+      <img src="https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpeg?auto=compress&cs=tinysrgb&w=900&h=400&fit=crop" alt="Mobile phones iOS Android" onerror="this.style.display='none'"/>
+
+      <h3>3. Team Location & Hourly Rates</h3>
+      <p>Where your development team is based has an enormous impact on total cost:</p>
+      <table class="cost-table">
+        <tr><th>Region</th><th>Hourly Rate</th><th>$100K Project Actual Cost</th></tr>
+        <tr><td>🇺🇸 USA / Canada</td><td>$100 – $200/hr</td><td>Full budget or more</td></tr>
+        <tr><td>🇬🇧 Western Europe</td><td>$75 – $150/hr</td><td>$100K – $150K</td></tr>
+        <tr><td>🇪🇪 Eastern Europe</td><td>$35 – $75/hr</td><td>$45K – $90K</td></tr>
+        <tr><td>🇮🇳 India / Pakistan</td><td>$20 – $45/hr</td><td>$25K – $55K</td></tr>
+        <tr><td>🇰🇪 Africa (Kenya/Nigeria)</td><td>$20 – $55/hr</td><td>$28K – $65K</td></tr>
+      </table>
+
+      <h3>4. Design Complexity</h3>
+      <p>Custom UI/UX design from scratch adds $5,000–$30,000 depending on the number of screens and interaction complexity. Using a pre-built design system (like Material Design or Apple HIG) can cut this significantly.</p>
+
+      <h3>5. Backend & Integrations</h3>
+      <p>Most apps need a backend: a server, a database, and an API layer. Add in third-party integrations — Stripe, Twilio, Google Maps, Firebase, M-Pesa — and each one adds 15–40 hours of development.</p>
+
+      <h3>6. Quality Assurance</h3>
+      <p>Industry benchmarks put QA at <strong>20–25% of total development hours</strong>. Skipping it is how you launch a buggy app and get one-star reviews. At a blended rate of $100–$150/hr, that's $10,000–$30,000 on a mid-range project.</p>
+
+      <h3>7. Ongoing Maintenance</h3>
+      <p>Apps don't stop costing money at launch. OS updates, dependency patches, bug fixes, and new features typically run <strong>15–25% of your build cost per year</strong>. Budget for this from day one.</p>
+
+      <h2>What You Get at Each Budget Level</h2>
+      <p>At <strong>$15K–$40K</strong>, you're getting an MVP with core functionality on a single platform — enough to test your idea and get your first users. At <strong>$40K–$120K</strong>, you can build something polished with custom design, backend, and key integrations. At <strong>$120K–$300K</strong>, you're building a production-grade app with real-time features, advanced UX, and full cross-platform support. Above $300K, you're typically building an enterprise platform with AI, complex integrations, compliance requirements, or a large content ecosystem.</p>
+
+      <div class="callout">
+        <div class="callout-icon">⚠️</div>
+        <div><div class="callout-title">The Hidden Cost Nobody Mentions</div><div class="callout-text">60% of projects exceed initial budgets, mostly due to scope creep — features added mid-build that weren't in the original brief. The fix: a detailed specification document signed off before development begins. I include this in every project proposal at no extra cost.</div></div>
+      </div>
+
+      <h2>How I Price My Mobile Projects</h2>
+      <p>At DevPortfolio, my mobile app pricing starts at <strong>$1,999 for a Professional plan</strong> covering a polished cross-platform React Native app with backend, authentication, and two integrations. Complex, multi-feature apps are scoped individually with a fixed-price proposal. You always know the total before we start.</p>
+    `
+  },
+  'outgrown': {
+    cat:'Software Strategy', catColor:'var(--red)', catBg:'rgba(245,83,83,.12)',
+    date:'May 18, 2026', read:'7 min read',
+    title:'5 Signs Your Business Has Outgrown Its Software — And What To Do About It',
+    img:'https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1200&h=500&fit=crop',
+    imgAlt:'Team working with business software',
+    prev:{slug:'mobile-cost',title:'How Much Does It Cost to Build a Mobile App?'},
+    next:{slug:'tech-stack',title:'How To Choose The Right Tech Stack'},
+    body:`
+      <p>Your team has doubled. Orders have tripled. You're onboarding new employees every week. But your software is the same system you cobbled together on a free plan three years ago — and it's starting to crack under the weight.</p>
+      <p>The danger isn't that the software is slow. The danger is that you don't realise how much it's costing you until the damage is done: deals lost, staff frustrated, data in spreadsheets instead of systems.</p>
+      <p>Here are the five unmistakable signs that your business has outgrown its software — and a practical roadmap for what to do about it.</p>
+
+      <h2>Sign #1: Your Team Is Living in Spreadsheets</h2>
+      <p>When software should be doing the work but spreadsheets are doing it instead, that's a red flag. Spreadsheets are brilliant tools for analysis. They are terrible tools for operations. If your team is maintaining master Excel files, manually copying data between systems, or using WhatsApp to fill the gaps your software can't — you've outgrown what you have.</p>
+      <div class="callout">
+        <div class="callout-icon">📊</div>
+        <div><div class="callout-title">The Real Cost of Spreadsheet Operations</div><div class="callout-text">A team of 10 spending 2 hours per week on manual data entry costs you 1,040 person-hours per year. At even a modest $25/hour, that's $26,000 in annual productivity lost to work a properly built system would eliminate entirely.</div></div>
+      </div>
+
+      <h2>Sign #2: Onboarding a New Employee Takes Weeks</h2>
+      <p>A well-built system is self-documenting. New team members should be able to get up to speed in days, not weeks. If your onboarding process involves shadowing someone for two weeks just to learn which spreadsheet does what, your software is generating institutional knowledge debt — and every departure becomes a crisis.</p>
+      <img src="https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=900&h=400&fit=crop" alt="Team onboarding" onerror="this.style.display='none'"/>
+
+      <h2>Sign #3: You Can't Answer Basic Business Questions Quickly</h2>
+      <p>How many active customers do you have? What's your average order value this month versus last? Which product is most profitable? If answering these questions requires pulling data from three different places and building a pivot table, your systems are failing you. Real-time visibility into your own business is a basic requirement, not a luxury.</p>
+
+      <h2>Sign #4: You've Built Workarounds On Top of Workarounds</h2>
+      <p>Every workaround is technical debt with a human cost. When you find yourself explaining to new staff "we do it this way because of how the system works," you're describing a business running around its software instead of with it. These workarounds compound — each one makes the next problem slightly harder to solve.</p>
+
+      <div class="stat-boxes">
+        <div class="stat-box"><div class="stat-box-num">63%</div><div class="stat-box-lbl">of SMEs delayed rebuilding systems due to cost fears</div></div>
+        <div class="stat-box"><div class="stat-box-num">2.4×</div><div class="stat-box-lbl">average ROI within 18 months after a rebuild</div></div>
+        <div class="stat-box"><div class="stat-box-num">$40K</div><div class="stat-box-lbl">average annual cost of manual workarounds in a 20-person team</div></div>
+      </div>
+
+      <h2>Sign #5: Your Software Vendor Can't Grow With You</h2>
+      <p>SaaS tools are built for the average customer. When you start needing things the average customer doesn't need — custom integrations, different data structures, specific reporting formats, unique workflows — you hit a wall. The vendor can't build it for just you. And the workaround is never as good as the real solution.</p>
+
+      <h2>What To Do About It: A Practical Roadmap</h2>
+      <h3>Step 1: Audit Before You Build</h3>
+      <p>Before committing to a rebuild, map every system and every manual process. You need to know what's actually broken versus what's just unfamiliar. Sometimes a well-configured integration between existing tools solves the problem for $5,000 instead of $50,000.</p>
+
+      <h3>Step 2: Define Outcomes, Not Features</h3>
+      <p>Don't start by listing features. Start by listing outcomes: "Our team should be able to onboard a new client in under 10 minutes." "Finance should be able to pull any monthly report without help from IT." Outcomes drive better software specifications than feature lists do.</p>
+
+      <h3>Step 3: Build Iteratively, Not All at Once</h3>
+      <p>The biggest mistake businesses make when rebuilding software is trying to replace everything at once. Build a core that solves your #1 pain point first. Ship it, use it, learn from it, then add the next layer. A phased approach reduces risk and gets you value faster.</p>
+
+      <div class="callout">
+        <div class="callout-icon">🏗️</div>
+        <div><div class="callout-title">The Rule of Three</div><div class="callout-text">If three different people on your team independently mention the same frustration with your current software, that's your Phase 1 feature. Build that first. Everything else is Phase 2.</div></div>
+      </div>
+
+      <h3>Step 4: Don't Rebuild on the Same Assumptions</h3>
+      <p>The failure mode I see most often: businesses rebuild their old system with better technology, recreating all the old limitations with new code. Use the rebuild as a chance to question every process. Why does this workflow exist? Does it still make sense? Often it doesn't.</p>
+    `
+  },
+  'tech-stack': {
+    cat:'Tech Stack', catColor:'var(--purple)', catBg:'rgba(155,109,255,.12)',
+    date:'May 5, 2026', read:'6 min read',
+    title:'How To Choose The Right Tech Stack For Your Web App in 2026',
+    img:'https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=1200&h=500&fit=crop',
+    imgAlt:'Code on computer screen',
+    prev:{slug:'outgrown',title:'5 Signs Your Business Has Outgrown Its Software'},
+    next:{slug:'woo-vs-shopify',title:'WooCommerce vs Shopify in 2026'},
+    body:`
+      <p>The wrong tech stack decision is one of the most expensive mistakes a startup can make — and it rarely shows up immediately. You feel it six months later when scaling becomes painful, hiring becomes hard, or a new feature that should take two weeks takes two months.</p>
+      <p>In 2026, the landscape has consolidated meaningfully. There are fewer genuinely good choices — which makes the decision easier, but makes the stakes of getting it wrong even higher.</p>
+      <p>Here's the framework I use when choosing a stack for a new project — and the specific recommendations I'd give to most web app teams today.</p>
+
+      <h2>The Recommended Stack for Most Web Apps in 2026</h2>
+      <div class="callout">
+        <div class="callout-icon">⚡</div>
+        <div><div class="callout-title">The 2026 Default Stack</div><div class="callout-text"><strong>Frontend:</strong> Next.js (React) · <strong>Backend:</strong> Node.js (Express or NestJS) or Python (FastAPI) · <strong>Database:</strong> PostgreSQL · <strong>Auth:</strong> Supabase Auth or Auth0 · <strong>Hosting:</strong> Vercel (frontend) + Railway or AWS (backend) · <strong>Payments:</strong> Stripe / M-Pesa</div></div>
+      </div>
+      <p>This stack covers 85% of web application requirements, has the largest talent pool, the best tooling ecosystem, and the clearest path from MVP to scale. It's what I recommend — and build — for most clients.</p>
+
+      <h2>Frontend: Why Next.js Has Won</h2>
+      <p>React is the dominant frontend framework in 2026 by job postings, ecosystem size, and community. Next.js builds on top of React with server-side rendering (SSR), static generation (SSG), and API routes — giving you everything you need in a single framework.</p>
+      <img src="https://images.pexels.com/photos/4164418/pexels-photo-4164418.jpeg?auto=compress&cs=tinysrgb&w=900&h=380&fit=crop" alt="Frontend development" onerror="this.style.display='none'"/>
+      <p>The main alternatives and when to consider them:</p>
+      <table class="cost-table">
+        <tr><th>Framework</th><th>Best For</th><th>Avoid If</th></tr>
+        <tr><td><strong>Next.js (React)</strong></td><td>Most web apps, SEO-critical sites, SaaS</td><td>Tiny projects with no SEO needs</td></tr>
+        <tr><td>Vue.js / Nuxt</td><td>Smaller teams, gentler learning curve</td><td>You need the largest talent pool</td></tr>
+        <tr><td>SvelteKit</td><td>Performance-critical apps, smaller bundles</td><td>You need senior hires quickly</td></tr>
+        <tr><td>Angular</td><td>Enterprise, large teams, strict structure</td><td>Speed and flexibility are priorities</td></tr>
+      </table>
+
+      <h2>Backend: Node.js vs Python</h2>
+      <p>In 2026, the choice comes down to one question: <strong>does your app need AI or heavy data processing?</strong></p>
+      <ul>
+        <li><strong>Node.js (Express/NestJS/Fastify):</strong> Best for API-heavy apps, real-time features, and JavaScript teams. Shares the language with your frontend, which reduces context switching and hiring cost.</li>
+        <li><strong>Python (FastAPI/Django):</strong> Best if you need AI/ML integration, data pipelines, or your team has Python expertise. FastAPI is particularly impressive in 2026 — it's fast, typed, and has excellent async support.</li>
+        <li><strong>Go:</strong> Best for high-performance, high-concurrency systems where raw throughput matters. Steeper learning curve but significantly better performance under load.</li>
+      </ul>
+
+      <h2>Database: PostgreSQL Is the Default Choice</h2>
+      <p>PostgreSQL remains the gold standard for relational data in 2026. It's production-grade, battle-tested, supports JSON fields for semi-structured data, has excellent full-text search, and scales well with proper indexing.</p>
+      <div class="stat-boxes">
+        <div class="stat-box"><div class="stat-box-num">#1</div><div class="stat-box-lbl">Most-used database for new web projects 2026</div></div>
+        <div class="stat-box"><div class="stat-box-num">30yr</div><div class="stat-box-lbl">Active development history</div></div>
+        <div class="stat-box"><div class="stat-box-num">Free</div><div class="stat-box-lbl">Open source, no licensing costs</div></div>
+      </div>
+      <p>When to use something else: choose <strong>MongoDB</strong> if your data is genuinely document-like and schema-less. Choose <strong>Redis</strong> alongside PostgreSQL for caching and session storage. Choose a <strong>vector database</strong> (Pinecone, Weaviate) if you're building AI features that need semantic search.</p>
+
+      <h2>The Framework for Choosing Your Stack</h2>
+      <h3>Question 1: What does your team already know?</h3>
+      <p>The best stack is often the one your team can move fastest with. A brilliant Python team writing React for the first time will be slower than an average JavaScript team using Node. Don't let technology preferences override team productivity.</p>
+      <h3>Question 2: What does your hiring market look like?</h3>
+      <p>React developers are everywhere. Svelte developers are rare. If you'll need to hire in the next 12 months, weight your decision toward technologies with large, accessible talent pools.</p>
+      <h3>Question 3: What are your scale requirements?</h3>
+      <p>If you're building an MVP for 100 users, almost any stack is fine. If you're building a platform that needs to serve 100,000 concurrent users in year one, the stack decision has real consequences. Build for your realistic 18-month scale, not your 10-year dream.</p>
+
+      <div class="callout">
+        <div class="callout-icon">🚫</div>
+        <div><div class="callout-title">The Most Common Stack Mistake</div><div class="callout-text">Choosing a stack because it's trendy, not because it fits the project. Every year there's a new "this changes everything" framework. In 2026 it's Bun and Deno. They're interesting — but interesting is not the same as proven. For most production apps, boring and battle-tested wins over cutting-edge.</div></div>
+      </div>
+    `
+  },
+  'woo-vs-shopify': {
+    cat:'E-Commerce', catColor:'var(--green)', catBg:'rgba(34,211,160,.12)',
+    date:'April 22, 2026', read:'8 min read',
+    title:'WooCommerce vs Shopify in 2026: Which Platform Should You Actually Build On?',
+    img:'https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=1200&h=500&fit=crop',
+    imgAlt:'E-commerce online shopping',
+    prev:{slug:'tech-stack',title:'How To Choose The Right Tech Stack'},
+    next:null,
+    body:`
+      <p>I've built over 20 e-commerce stores — roughly split evenly between WooCommerce and Shopify. I have no financial incentive to recommend either. Here's the most honest comparison I can give you.</p>
+      <p><strong>The short answer:</strong> Shopify wins on simplicity. WooCommerce wins on long-term control. Neither is right for every business — and choosing wrong is an expensive mistake, not just because of migration costs, but because you'll be stuck with the consequences for years.</p>
+
+      <h2>The Core Difference in One Sentence</h2>
+      <p>Shopify is a <strong>hosted, managed e-commerce service</strong>. WooCommerce is an <strong>open-source plugin you own</strong>. That distinction drives almost every other difference between them.</p>
+
+      <h2>Total Cost of Ownership — The Real Numbers</h2>
+      <table class="cost-table">
+        <tr><th>Cost Category</th><th>Shopify (Basic-Advanced)</th><th>WooCommerce</th></tr>
+        <tr><td>Monthly platform fee</td><td>$39 – $399/mo</td><td>$0 (plugin is free)</td></tr>
+        <tr><td>Hosting</td><td>Included</td><td>$15 – $100/mo</td></tr>
+        <tr><td>Transaction fees</td><td>0.5% – 2% (non-Shopify payments)</td><td>$0 (gateway fees only)</td></tr>
+        <tr><td>Themes</td><td>$0 – $400 one-time</td><td>$0 – $200 one-time</td></tr>
+        <tr><td>Plugins / Apps</td><td>$50 – $500+/mo subscription</td><td>$0 – $300 one-time or free</td></tr>
+        <tr><td><strong>3-year total (mid-tier)</strong></td><td><strong>~$8,000 – $25,000</strong></td><td><strong>~$3,000 – $10,000</strong></td></tr>
+      </table>
+      <div class="callout">
+        <div class="callout-icon">💰</div>
+        <div><div class="callout-title">The App Subscription Trap</div><div class="callout-text">Shopify's app store is brilliant — and dangerous. It's easy to accumulate $300–$600/month in app subscriptions for features that WooCommerce plugins provide for a one-time cost of $50. Audit your Shopify apps every quarter and cut anything you don't actively use.</div></div>
+      </div>
+
+      <h2>When to Choose Shopify</h2>
+      <ul>
+        <li><strong>You want to launch fast</strong> — Shopify can have you selling in days. WooCommerce needs hosting, theme setup, plugin configuration, and more.</li>
+        <li><strong>You're not technical</strong> — Shopify's managed infrastructure means you never worry about server downtime, security updates, or database backups.</li>
+        <li><strong>You're a dropshipper or print-on-demand business</strong> — Shopify's native integrations with these models are unmatched.</li>
+        <li><strong>You need point-of-sale</strong> — Shopify POS is genuinely excellent and deeply integrated with the online store.</li>
+      </ul>
+      <img src="https://images.pexels.com/photos/6214476/pexels-photo-6214476.jpeg?auto=compress&cs=tinysrgb&w=900&h=380&fit=crop" alt="Online store setup" onerror="this.style.display='none'"/>
+
+      <h2>When to Choose WooCommerce</h2>
+      <ul>
+        <li><strong>You have unique requirements</strong> — WooCommerce can be customized to do almost anything. Shopify's API is powerful but ultimately closed. If you need a checkout flow, payment method, or product type that doesn't fit Shopify's model, WooCommerce wins.</li>
+        <li><strong>You want to own your platform</strong> — Your WooCommerce store lives on your server. No one can change the pricing on you, deprecate a feature you depend on, or lock you into a payment processor.</li>
+        <li><strong>You're in a market with local payment methods</strong> — M-Pesa, Flutterwave, Ozow, and other African/regional payment gateways have robust WooCommerce integrations. Shopify support for these is improving but still limited.</li>
+        <li><strong>You have significant existing WordPress content</strong> — If your site runs on WordPress, WooCommerce is the obvious choice. The integration is seamless and you maintain one platform.</li>
+      </ul>
+
+      <h2>The M-Pesa Factor</h2>
+      <p>If you're building for an East or West African market, this is often the deciding factor. WooCommerce has mature, actively maintained M-Pesa plugins — including the one I built, which has 2,000+ active installs. Shopify's M-Pesa integration via third-party apps is less mature and less flexible.</p>
+
+      <h2>My Recommendation</h2>
+      <p>Start with <strong>Shopify if you want to validate quickly</strong> and your business model is standard. Move to <strong>WooCommerce if you need control</strong>, have complex requirements, or are serving markets with non-standard payment infrastructure.</p>
+      <div class="callout">
+        <div class="callout-icon">🔄</div>
+        <div><div class="callout-title">Migration Is Possible — But Painful</div><div class="callout-text">Migrating from Shopify to WooCommerce (or vice versa) costs between $3,000 and $15,000 in development and involves SEO risk if not done correctly. Get the decision right from the start. If you're unsure, a 30-minute consultation before you build is much cheaper than migrating later.</div></div>
+      </div>
+    `
+  }
+};
+
+function openArticle(slug){
+  const a=ARTICLES[slug];if(!a)return;
+  document.getElementById('blog-index').style.display='none';
+  const art=document.getElementById('blog-article');
+  art.style.display='block';
+  document.getElementById('article-content').innerHTML=`
+    <div class="page-hero-dark" style="padding:100px 0 52px">
+      <div class="wrap">
+        <button onclick="closeBlogArticle()" style="display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--txt2);background:var(--card);border:1px solid var(--border2);border-radius:30px;padding:7px 16px;cursor:pointer;margin-bottom:28px;transition:all .2s" onmouseover="this.style.color='var(--acc)'" onmouseout="this.style.color='var(--txt2)'">← Back to Blog</button>
+        <div style="margin-bottom:12px"><span style="font-size:11px;font-weight:700;padding:3px 12px;border-radius:20px;background:${a.catBg};color:${a.catColor};border:1px solid ${a.catColor}30">${a.cat}</span></div>
+        <h1 style="font-size:clamp(28px,4vw,48px);font-weight:800;color:var(--txt);max-width:780px;line-height:1.15;margin-bottom:20px">${a.title}</h1>
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--acc2));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;font-family:var(--fd)">AC</div>
+            <div><div style="font-size:14px;font-weight:600;color:var(--txt)">Alex Carter</div><div style="font-size:12px;color:var(--txt3)">${a.date}</div></div>
+          </div>
+          <span class="reading-time-badge">⏱ ${a.read}</span>
+        </div>
+      </div>
+    </div>
+    <div class="section" style="padding-top:48px">
+      <div class="wrap">
+        <div class="article-wrap">
+          <img src="${a.img}" alt="${a.imgAlt}" class="article-hero-img" onerror="this.style.display='none'"/>
+          <div class="article-body">${a.body}</div>
+
+          <!-- Author card -->
+          <div class="article-author-card">
+            <div class="aa-av">AC</div>
+            <div>
+              <div class="aa-name">Alex Carter — Senior Web Developer</div>
+              <div class="aa-bio">I've been building digital products for 5 years across 12 countries. I write about what actually works in practice — from tech stack choices to client communication. If you found this useful, I also consult on projects. <a onclick="showPage('contact')" style="color:var(--acc);cursor:pointer;font-weight:700">Let's talk →</a></div>
+            </div>
+          </div>
+
+          <!-- Share -->
+          <div class="share-row">
+            <span class="share-lbl">Share this article:</span>
+            <button class="share-btn">LinkedIn</button>
+            <button class="share-btn">Twitter / X</button>
+            <button class="share-btn">Copy Link</button>
+          </div>
+
+          <!-- Prev/next nav -->
+          <div class="article-nav" style="margin-top:48px">
+            ${a.prev ? `<div class="an-col" onclick="openArticle('${a.prev.slug}')"><div class="an-lbl">‹ Previous</div><div class="an-title">${a.prev.title}</div></div>` : '<div class="an-col" style="opacity:.3;cursor:default"><div class="an-lbl">‹ Previous</div><div class="an-title">First article</div></div>'}
+            <div style="background:var(--border)"></div>
+            ${a.next ? `<div class="an-col" style="text-align:right" onclick="openArticle('${a.next.slug}')"><div class="an-lbl">Next ›</div><div class="an-title">${a.next.title}</div></div>` : '<div class="an-col" style="opacity:.3;cursor:default;text-align:right"><div class="an-lbl">Next ›</div><div class="an-title">Latest article</div></div>'}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="marquee-wrap"><div class="marquee-track" id="m4art"></div></div>`;
+  window.scrollTo({top:0,behavior:'smooth'});
+  const m=document.getElementById('m4art');
+  if(m) m.innerHTML=Array(10).fill(0).map(()=>`<span class="marquee-item">Contact ↗ <span>✦</span></span>`).join('')+Array(10).fill(0).map(()=>`<span class="marquee-item">Contact ↗ <span>✦</span></span>`).join('');
+}
+
+function closeBlogArticle(){
+  document.getElementById('blog-article').style.display='none';
+  document.getElementById('blog-index').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ══ HERO ROLE ══
+const ROLES=['Innovation','Excellence','Growth','The Future'];
+let ri=0;
+const rEl=document.getElementById('heroRole');
+if(rEl){
+  rEl.style.transition='opacity .3s';
+  setInterval(()=>{rEl.style.opacity=0;setTimeout(()=>{rEl.textContent=ROLES[ri=(ri+1)%ROLES.length];rEl.style.opacity=1},300)},2800);
+}
+
+// ══ INIT ══
+renderPlans();renderTestis();buildForm('hForm');buildForm('cpForm');
+</script>
+</body>
+</html>
